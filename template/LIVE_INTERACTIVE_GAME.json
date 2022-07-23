@@ -1,1 +1,21 @@
-{"cmd":"LIVE_INTERACTIVE_GAME","data":{"type":2,"uid":342023414,"uname":"爱喝可乐的胖沙李","uface":"","gift_id":0,"gift_name":"","gift_num":0,"price":0,"paid":false,"msg":"可是多云的牌子比较好看","fans_medal_level":5,"guard_level":0,"timestamp":1658547095,"anchor_lottery":null,"pk_info":null,"anchor_info":null}}
+{
+  "cmd": "LIVE_INTERACTIVE_GAME",
+  "data": {
+    "type": 2,
+    "uid": 342023414,
+    "uname": "爱喝可乐的胖沙李",
+    "uface": "",
+    "gift_id": 0,
+    "gift_name": "",
+    "gift_num": 0,
+    "price": 0,
+    "paid": false,
+    "msg": "可是多云的牌子比较好看",
+    "fans_medal_level": 5,
+    "guard_level": 0,
+    "timestamp": 1658547095,
+    "anchor_lottery": null,
+    "pk_info": null,
+    "anchor_info": null
+  }
+}

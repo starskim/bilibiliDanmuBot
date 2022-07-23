@@ -21,24 +21,24 @@ const {saveNewGuardInfo} = require("../database/guard");
  * @param room {number} 房间号
  * @returns {Promise<void>}
  */
-const processNewGuardInfo = async (info,room)=>{
+const processNewGuardInfo = async (info, room) => {
     try {
         const guardInfo = {
-            room:room,
-            uid:info.data.uid,
-            level:info.data.guard_level,
-            amount:info.data.num,
-            price:info.data.price,
-            time:{
-                start:new Date(info.data.start_time * 1000),
+            room: room,
+            uid: info.data.uid,
+            level: info.data.guard_level,
+            amount: info.data.num,
+            price: info.data.price,
+            time: {
+                start: new Date(info.data.start_time * 1000),
                 end: new Date(info.data.end_time * 1000)
             }
         }
         const res = await saveNewGuardInfo(guardInfo)
-        if (res.status === false){
+        if (res.status === false) {
             logger.warn(`An error occurred during save guard info to database, message:${res.message}`)
         }
-    }catch (e) {
+    } catch (e) {
         logger.warn(`An error occurred during save guard info, message:${e.message}`)
     }
 }

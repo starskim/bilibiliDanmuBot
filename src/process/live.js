@@ -1,6 +1,6 @@
 const logger = require('../local/logger')
 const fs = require('fs')
-const path = require ('path')
+const path = require('path')
 const {processDanmuMessage} = require("./danmu");
 const {processGiftMessage} = require("./gift");
 const {cacheOnlineMessage} = require("../cache/online");
@@ -8,7 +8,12 @@ const {cacheLiveMessage} = require("../cache/live");
 const {processBlockMessage} = require("./block");
 const {processRoomSilentOperation} = require("./silent");
 const {processInteractMessage} = require("./interact");
-const {processRedPacketStart, processRedPacketJoin, processRedPacketEnd, processRedPacketAggregation} = require("./redpacket");
+const {
+    processRedPacketStart,
+    processRedPacketJoin,
+    processRedPacketEnd,
+    processRedPacketAggregation
+} = require("./redpacket");
 const {processNewGuardInfo} = require("./guard");
 
 /**
@@ -17,40 +22,40 @@ const {processNewGuardInfo} = require("./guard");
  * @param client {string} 客户端唯一编号
  * @returns {Promise<void>}
  */
-const processLiveMessage = async (message,client)=>{
+const processLiveMessage = async (message, client) => {
     try {
-        const cacheRes = await cacheLiveMessage(JSON.stringify(message.info),10)
-        if (cacheRes){
+        const cacheRes = await cacheLiveMessage(JSON.stringify(message.info), 10)
+        if (cacheRes) {
             return
         }
         //await fs.writeFileSync(path.resolve(`./template/${message.info.cmd}.json`),JSON.stringify(message.info))
-        if (fs.existsSync(path.resolve(`./template/${message.info.cmd}.json`)) === false){
-            await fs.writeFileSync(path.resolve(`./template/${message.info.cmd}.json`),JSON.stringify(message.info))
+        if (fs.existsSync(path.resolve(`./template/${message.info.cmd}.json`)) === false) {
+            await fs.writeFileSync(path.resolve(`./template/${message.info.cmd}.json`), JSON.stringify(message.info))
         }
         switch (message.info.cmd) {
             case 'DANMU_MSG': //弹幕消息
-                await processDanmuMessage(message.info,message.room)
-                await processRedPacketJoin(message.room,message.info.info[1],message.info.info[2][0])//处理可能存在的红包事件
+                await processDanmuMessage(message.info, message.room)
+                await processRedPacketJoin(message.room, message.info.info[1], message.info.info[2][0])//处理可能存在的红包事件
                 break
 
             case 'SEND_GIFT': //礼物发送消息
-                await processGiftMessage(message.info,message.room)
+                await processGiftMessage(message.info, message.room)
                 break
 
             case 'ROOM_BLOCK_MSG': //用户被某个房间封禁
-                await processBlockMessage(message.info,message.room)
+                await processBlockMessage(message.info, message.room)
                 break
 
             case 'ROOM_SILENT_ON': //房间禁言开启
-                await processRoomSilentOperation(message.info,message.room)
+                await processRoomSilentOperation(message.info, message.room)
                 break
 
             case 'ROOM_SILENT_OFF': //房间禁言关闭
-                await processRoomSilentOperation(message.info,message.room)
+                await processRoomSilentOperation(message.info, message.room)
                 break
 
             case 'INTERACT_WORD':  //房间进入or交互信息
-                await processInteractMessage(message.info,message.room)
+                await processInteractMessage(message.info, message.room)
                 break
 
             case 'PREPARING': //直播结束
@@ -65,17 +70,17 @@ const processLiveMessage = async (message,client)=>{
                 await processRedPacketAggregation(message.info)
                 break
             case 'GUARD_BUY'://新舰长
-                await processNewGuardInfo(message.info,message.room)
+                await processNewGuardInfo(message.info, message.room)
                 break
 
             case 'POPULARITY_RED_POCKET_START': //开始红包抽奖
-                await processRedPacketStart(message.info,message.room)
+                await processRedPacketStart(message.info, message.room)
                 break
 
             default:
             //console.log(message.info.cmd)
         }
-    }catch (e) {
+    } catch (e) {
         logger.warn(`An error occurred during live message processing,message:${e.message}`)
     }
 }
@@ -87,14 +92,14 @@ const processLiveMessage = async (message,client)=>{
  * @param client {string} 客户端唯一编号
  * @returns {Promise<void>}
  */
-const processOnlineMessage = async (message,client)=>{
+const processOnlineMessage = async (message, client) => {
     try {
-        const cacheResult = await cacheOnlineMessage(JSON.stringify(message),10)
-        if (cacheResult){
+        const cacheResult = await cacheOnlineMessage(JSON.stringify(message), 10)
+        if (cacheResult) {
             return
         }
         logger.debug(`Room ${message.room} now has ${message.online} viewers online.`)
-    }catch (e) {
+    } catch (e) {
         logger.warn(`An error occurred during online message processing, message:${e.message}`)
     }
 }

@@ -16,12 +16,12 @@ const db = require('./db')
  * }} 舰长信息
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const saveNewGuardInfo = async (info) =>{
+const saveNewGuardInfo = async (info) => {
     try {
         await new db.guard(info).save()
-        return {status:true,message:'OK'}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: 'OK'}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 

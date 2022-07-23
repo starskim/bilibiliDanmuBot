@@ -1,1 +1,11 @@
-{"cmd":"TRADING_SCORE","data":{"bubble_show_time":3,"num":70,"score_id":3,"uid":2066486696,"update_time":1658537401,"update_type":1}}
+{
+  "cmd": "TRADING_SCORE",
+  "data": {
+    "bubble_show_time": 3,
+    "num": 70,
+    "score_id": 3,
+    "uid": 2066486696,
+    "update_time": 1658537401,
+    "update_type": 1
+  }
+}

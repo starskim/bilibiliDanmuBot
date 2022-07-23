@@ -100,35 +100,35 @@ const {saveGiftInfo} = require("../database/gift");
  * @param room {number} 房间号
  * @returns {Promise<void>}
  */
-const processGiftMessage = async (gift,room)=>{
+const processGiftMessage = async (gift, room) => {
     try {
         const giftInfo = {
-            uid:gift.data.uid,
-            room:room,
-            guard:gift.data.medal_info.guard_level,
-            gift:{
-                id:gift.data.giftId,
-                name:gift.data.giftName,
-                type:gift.data.giftType,
-                amount:gift.data.num,
+            uid: gift.data.uid,
+            room: room,
+            guard: gift.data.medal_info.guard_level,
+            gift: {
+                id: gift.data.giftId,
+                name: gift.data.giftName,
+                type: gift.data.giftType,
+                amount: gift.data.num,
             },
-            price:{
-                type:gift.data.coin_type,
-                amount:gift.data.total_coin,
+            price: {
+                type: gift.data.coin_type,
+                amount: gift.data.total_coin,
             },
-            medal:{
-                level:gift.data.medal_info.medal_level,
-                owner:gift.data.medal_info.target_id,
-                name:gift.data.medal_info.medal_name,
+            medal: {
+                level: gift.data.medal_info.medal_level,
+                owner: gift.data.medal_info.target_id,
+                name: gift.data.medal_info.medal_name,
             }
         }
         logger.gift(`[${gift.data.uname}]赠送了 ${gift.data.num} 个 ${gift.data.giftName}`)
         const res = await saveGiftInfo(giftInfo)
-        if (res.status === false){
+        if (res.status === false) {
             logger.warn(`An error occurred when saving gift info to database, message:${res.message}`)
         }
 
-    }catch (e) {
+    } catch (e) {
         logger.warn(`An error occurred when saving gift info, message:${e.message}`)
     }
 }

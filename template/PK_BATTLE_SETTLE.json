@@ -1,1 +1,13 @@
-{"cmd":"PK_BATTLE_SETTLE","pk_id":304179131,"pk_status":401,"settle_status":1,"timestamp":1658535773,"data":{"battle_type":1,"result_type":2,"star_light_msg":""},"roomid":"24697277"}
+{
+  "cmd": "PK_BATTLE_SETTLE",
+  "pk_id": 304179131,
+  "pk_status": 401,
+  "settle_status": 1,
+  "timestamp": 1658535773,
+  "data": {
+    "battle_type": 1,
+    "result_type": 2,
+    "star_light_msg": ""
+  },
+  "roomid": "24697277"
+}

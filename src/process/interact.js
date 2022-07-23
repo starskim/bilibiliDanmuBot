@@ -47,21 +47,21 @@ const {saveUserJoinInfo} = require("../database/join");
  * @param room {number}
  * @returns {Promise<void>}
  */
-const processInteractMessage = async (info,room)=>{
-    if (info.data.msg_type === 1){ // 1=进场 2=关注
+const processInteractMessage = async (info, room) => {
+    if (info.data.msg_type === 1) { // 1=进场 2=关注
         const userJoinInfo = {
-            uid:info.data.uid,
-            medal:{
-                level:info.data.fans_medal.medal_level,
-                name:info.data.fans_medal.medal_name
+            uid: info.data.uid,
+            medal: {
+                level: info.data.fans_medal.medal_level,
+                name: info.data.fans_medal.medal_name
             }
         }
         logger.join(`User ${info.data.uname} joined room ${room}.`)
-        await processUserJoin(userJoinInfo,room)
+        await processUserJoin(userJoinInfo, room)
         return
     }
 
-    if (info.data.msg_type === 2){ //关注消息
+    if (info.data.msg_type === 2) { //关注消息
         //此方式获取关注用户不及时且不准确,废弃
     }
 }
@@ -79,21 +79,21 @@ const processInteractMessage = async (info,room)=>{
  * @param room {number} 房间号
  * @returns {Promise<void>}
  */
-const processUserJoin = async (info,room) =>{
+const processUserJoin = async (info, room) => {
     try {
         const joinInfo = {
-            room:room,
-            uid:info.uid,
-            medal:{
-                level:info.medal.level,
-                name:info.medal.name,
+            room: room,
+            uid: info.uid,
+            medal: {
+                level: info.medal.level,
+                name: info.medal.name,
             }
         }
         const res = await saveUserJoinInfo(joinInfo)
-        if (res.status === false){
+        if (res.status === false) {
             logger.warn(`An error occurred while saving user join message to database, message:${res.message}`)
         }
-    }catch (e) {
+    } catch (e) {
         logger.warn(`An error occurred while saving user join message, message:${e.message}`)
     }
 }

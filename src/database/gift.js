@@ -1,4 +1,4 @@
-const db = require ('./db')
+const db = require('./db')
 
 
 /**
@@ -25,12 +25,12 @@ const db = require ('./db')
  * }}
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const saveGiftInfo = async (gift)=>{
+const saveGiftInfo = async (gift) => {
     try {
         await new db.gift(gift).save()
-        return {status:true,message:'OK'}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: 'OK'}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 

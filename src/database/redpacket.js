@@ -6,12 +6,12 @@ const db = require('./db')
  * @param redPacketInfo {{winners: *[], senderInfo: {uid: Number, face: String, name: String}, price: Number, time: {start: Date, end: Date},amount:Number, message: String, room: Number, hash: Number, users: *[], gifts: *[]}}
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const saveNewRedPacketInfo = async (redPacketInfo)=>{
+const saveNewRedPacketInfo = async (redPacketInfo) => {
     try {
         await new db.redPacket(redPacketInfo).save()
-        return {status:true,message:'OK'}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: 'OK'}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 
@@ -22,19 +22,19 @@ const saveNewRedPacketInfo = async (redPacketInfo)=>{
  * @param packetId {Number}
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const pushUserJoinRedPacketEvent = async (uid,packetId)=>{
+const pushUserJoinRedPacketEvent = async (uid, packetId) => {
     try {
-        await db.redPacket.updateOne({hash:packetId},{
-            $push:{
-                users:{
-                    uid:uid
+        await db.redPacket.updateOne({hash: packetId}, {
+            $push: {
+                users: {
+                    uid: uid
                 }
             },
-            $inc:{amount:1}
+            $inc: {amount: 1}
         }).exec()
-        return {status:true,message:'OK'}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: 'OK'}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 
@@ -45,16 +45,16 @@ const pushUserJoinRedPacketEvent = async (uid,packetId)=>{
  * @param packetId {Number}
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const pushWinnerUsersToRedPacketEvent = async (users,packetId)=>{
+const pushWinnerUsersToRedPacketEvent = async (users, packetId) => {
     try {
-        await db.redPacket.updateOne({hash:packetId},{
-            $set:{
-                winners:users
+        await db.redPacket.updateOne({hash: packetId}, {
+            $set: {
+                winners: users
             }
         }).exec()
-        return {status:true,message:'OK'}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: 'OK'}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 
@@ -64,15 +64,15 @@ const pushWinnerUsersToRedPacketEvent = async (users,packetId)=>{
  * @param room {number} 房间号
  * @returns {Promise<{message: string, status: boolean, hash:Number?, danmu:String?}>}
  */
-const getInProgressRedPacketEvent = async (room)=>{
+const getInProgressRedPacketEvent = async (room) => {
     try {
-        const res = await db.redPacket.findOne({room:room,'time.end':{$gte:new Date()}}).exec()
-        if (res === null){
-            return {status:true,message:`No result`}
+        const res = await db.redPacket.findOne({room: room, 'time.end': {$gte: new Date()}}).exec()
+        if (res === null) {
+            return {status: true, message: `No result`}
         }
-        return {status:true,message:`OK`,hash:res['hash'],danmu:res['message'].toString()}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: `OK`, hash: res['hash'], danmu: res['message'].toString()}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 
@@ -83,16 +83,16 @@ const getInProgressRedPacketEvent = async (room)=>{
  * @param amount {number}
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const updateRedPacketUserAmount = async (pocketId,amount)=>{
+const updateRedPacketUserAmount = async (pocketId, amount) => {
     try {
-        await db.redPacket.updateOne({hash:pocketId},{
-            $set:{
-                amount:amount
+        await db.redPacket.updateOne({hash: pocketId}, {
+            $set: {
+                amount: amount
             }
         }).exec()
-        return {status:true,message:'OK'}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: 'OK'}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 

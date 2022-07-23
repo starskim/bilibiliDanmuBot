@@ -11,13 +11,13 @@ const redis = new Redis(`${config.get('database.redis')}1`)
  * @param ttl {number} 缓存存活时间
  * @returns {Promise<boolean>} true则存在,false则不存在
  */
-const cacheOnlineMessage = async (message,ttl)=>{
+const cacheOnlineMessage = async (message, ttl) => {
     const hash = md5(message)
-    const res = await redis.set(hash,'exits','NX','EX',ttl)
+    const res = await redis.set(hash, 'exits', 'NX', 'EX', ttl)
     return res === null;
 }
 
-redis.on('error',e=>{
+redis.on('error', e => {
     logger.error(`There is an error occurred when connecting redis\n${e.message}`)
     process.exit(-1001)
 })

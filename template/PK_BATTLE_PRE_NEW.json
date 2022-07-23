@@ -1,1 +1,19 @@
-{"cmd":"PK_BATTLE_PRE_NEW","pk_status":101,"pk_id":304179131,"timestamp":1658535462,"data":{"battle_type":1,"match_type":1,"uname":"午夜小点心v","face":"http://i0.hdslb.com/bfs/face/e7ea5115808ce81575fd6a664db116c37feb67cd.jpg","uid":13387545,"room_id":10012745,"season_id":51,"pre_timer":10,"pk_votes_name":"乱斗值","end_win_task":null},"roomid":24697277}
+{
+  "cmd": "PK_BATTLE_PRE_NEW",
+  "pk_status": 101,
+  "pk_id": 304179131,
+  "timestamp": 1658535462,
+  "data": {
+    "battle_type": 1,
+    "match_type": 1,
+    "uname": "午夜小点心v",
+    "face": "http://i0.hdslb.com/bfs/face/e7ea5115808ce81575fd6a664db116c37feb67cd.jpg",
+    "uid": 13387545,
+    "room_id": 10012745,
+    "season_id": 51,
+    "pre_timer": 10,
+    "pk_votes_name": "乱斗值",
+    "end_win_task": null
+  },
+  "roomid": 24697277
+}

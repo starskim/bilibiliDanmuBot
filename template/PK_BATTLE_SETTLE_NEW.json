@@ -1,1 +1,51 @@
-{"cmd":"PK_BATTLE_SETTLE_NEW","data":{"battle_type":6,"dm_conf":{"bg_color":"#72C5E2","font_color":"#FFE10B"},"dmscore":144,"init_info":{"assist_info":[{"face":"http://i1.hdslb.com/bfs/face/196e99f23a0b6861b4daa3e6858ad9dbf269d4d0.jpg","rank":1,"uid":495277279,"uname":"不一般的三"}],"result_type":2,"room_id":23222423,"votes":702},"match_info":{"assist_info":[{"face":"http://i1.hdslb.com/bfs/face/196e99f23a0b6861b4daa3e6858ad9dbf269d4d0.jpg","rank":1,"uid":495277279,"uname":"不一般的三"},{"face":"http://i1.hdslb.com/bfs/face/af7fdb20ab753de62f8ea5ee878f48a35d76d655.jpg","rank":2,"uid":29235577,"uname":"吃红纸的鸽子"}],"result_type":-1,"room_id":23056225,"votes":16},"pk_id":304181543,"pk_status":601,"punish_end_time":1658548204,"settle_status":1,"timestamp":1658548024},"pk_id":304181543,"pk_status":601,"timestamp":1658548024}
+{
+  "cmd": "PK_BATTLE_SETTLE_NEW",
+  "data": {
+    "battle_type": 6,
+    "dm_conf": {
+      "bg_color": "#72C5E2",
+      "font_color": "#FFE10B"
+    },
+    "dmscore": 144,
+    "init_info": {
+      "assist_info": [
+        {
+          "face": "http://i1.hdslb.com/bfs/face/196e99f23a0b6861b4daa3e6858ad9dbf269d4d0.jpg",
+          "rank": 1,
+          "uid": 495277279,
+          "uname": "不一般的三"
+        }
+      ],
+      "result_type": 2,
+      "room_id": 23222423,
+      "votes": 702
+    },
+    "match_info": {
+      "assist_info": [
+        {
+          "face": "http://i1.hdslb.com/bfs/face/196e99f23a0b6861b4daa3e6858ad9dbf269d4d0.jpg",
+          "rank": 1,
+          "uid": 495277279,
+          "uname": "不一般的三"
+        },
+        {
+          "face": "http://i1.hdslb.com/bfs/face/af7fdb20ab753de62f8ea5ee878f48a35d76d655.jpg",
+          "rank": 2,
+          "uid": 29235577,
+          "uname": "吃红纸的鸽子"
+        }
+      ],
+      "result_type": -1,
+      "room_id": 23056225,
+      "votes": 16
+    },
+    "pk_id": 304181543,
+    "pk_status": 601,
+    "punish_end_time": 1658548204,
+    "settle_status": 1,
+    "timestamp": 1658548024
+  },
+  "pk_id": 304181543,
+  "pk_status": 601,
+  "timestamp": 1658548024
+}

@@ -1,1 +1,7 @@
-{"cmd":"HOT_BUY_NUM","data":{"goods_id":"1534404204373028864","num":3515}}
+{
+  "cmd": "HOT_BUY_NUM",
+  "data": {
+    "goods_id": "1534404204373028864",
+    "num": 3515
+  }
+}

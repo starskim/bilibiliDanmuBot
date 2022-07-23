@@ -1,1 +1,16 @@
-{"cmd":"LIVE_OPEN_PLATFORM_GAME","data":{"msg_type":"game_end","msg_sub_type":"game_end","game_name":"互动换衣","game_code":"1657841017207","game_id":"4002d59a-4908-41fd-8db1-bf16a2d74c7c","game_status":"","game_msg":"","game_conf":"","interactive_panel_conf":"","timestamp":0,"block_uids":null}}
+{
+  "cmd": "LIVE_OPEN_PLATFORM_GAME",
+  "data": {
+    "msg_type": "game_end",
+    "msg_sub_type": "game_end",
+    "game_name": "互动换衣",
+    "game_code": "1657841017207",
+    "game_id": "4002d59a-4908-41fd-8db1-bf16a2d74c7c",
+    "game_status": "",
+    "game_msg": "",
+    "game_conf": "",
+    "interactive_panel_conf": "",
+    "timestamp": 0,
+    "block_uids": null
+  }
+}

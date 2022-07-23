@@ -11,33 +11,33 @@ const {saveRoomMuteInfo} = require("../database/silent");
  * @param room {number} 房间号
  * @returns {Promise<void>}
  */
-const processRoomSilentOperation = async (info,room) =>{
+const processRoomSilentOperation = async (info, room) => {
     try {
         let silentInfo
-        if (info.cmd === 'ROOM_SILENT_OFF'){
+        if (info.cmd === 'ROOM_SILENT_OFF') {
             logger.mute(`Room ${room} stopped mute.`)
             silentInfo = {
-                room:room,
-                type:info.data.type,
-                level:info.data.level,
+                room: room,
+                type: info.data.type,
+                level: info.data.level,
                 until: new Date(info.data.second * 1000),
-                method:`DISABLE`
+                method: `DISABLE`
             }
-        }else{
+        } else {
             logger.mute(`Room ${room} starts mute users whose ${info.data.type} lower than ${info.data.level}.`)
             silentInfo = {
-                room:room,
-                type:info.data.type,
-                level:info.data.level,
+                room: room,
+                type: info.data.type,
+                level: info.data.level,
                 until: new Date(info.data.second * 1000),
-                method:`ENABLE`
+                method: `ENABLE`
             }
         }
         const res = await saveRoomMuteInfo(silentInfo)
-        if (res.status === false){
+        if (res.status === false) {
             logger.warn(`An error occurred when saving room mute info to database, message:${res.message}`)
         }
-    }catch (e) {
+    } catch (e) {
         logger.warn(`An error occurred when saving room mute info, message:${e.message}`)
     }
 }

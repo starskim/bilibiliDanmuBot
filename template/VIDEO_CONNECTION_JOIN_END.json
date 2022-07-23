@@ -1,1 +1,10 @@
-{"cmd":"VIDEO_CONNECTION_JOIN_END","data":{"channel_id":"72057594038484865","start_at":1658545164,"toast":"主播结束了与小喵唧Official的连线.","current_time":1658545164},"roomid":24697277}
+{
+  "cmd": "VIDEO_CONNECTION_JOIN_END",
+  "data": {
+    "channel_id": "72057594038484865",
+    "start_at": 1658545164,
+    "toast": "主播结束了与小喵唧Official的连线.",
+    "current_time": 1658545164
+  },
+  "roomid": 24697277
+}

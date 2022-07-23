@@ -1,4 +1,4 @@
-const db = require ('./db')
+const db = require('./db')
 
 
 /**
@@ -12,12 +12,12 @@ const db = require ('./db')
 }}
  * @returns {Promise<{message, status: boolean}>}
  */
-const saveRoomMuteInfo = async (silent)=>{
-    try{
+const saveRoomMuteInfo = async (silent) => {
+    try {
         await new db.silent(silent).save()
-        return {status:true,message:`OK`}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: `OK`}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 

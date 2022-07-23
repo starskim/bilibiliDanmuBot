@@ -12,15 +12,14 @@ const db = require('./db')
  * }}
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const saveBlockMessage = async (info)=>{
+const saveBlockMessage = async (info) => {
     try {
         await new db.block(info).save()
-        return {status:true,message:`OK`}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: `OK`}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
-
 
 
 module.exports = {

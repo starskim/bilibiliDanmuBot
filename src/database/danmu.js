@@ -1,4 +1,4 @@
-const db = require ('./db')
+const db = require('./db')
 
 
 /**
@@ -20,12 +20,12 @@ const db = require ('./db')
  * }}
  * @returns {Promise<{message, status: boolean}>}
  */
-const saveDanmuInfo = async (danmu)=>{
-    try{
+const saveDanmuInfo = async (danmu) => {
+    try {
         await new db.danmu(danmu).save()
-        return {status:true,message:`OK`}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: `OK`}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 
@@ -36,15 +36,15 @@ const saveDanmuInfo = async (danmu)=>{
  * @param message {string} 参与弹幕
  * @returns {Promise<{message: string, status: boolean, uid:number|NumberConstructor?}>}
  */
-const getRedPacketParticipant = async (room,message)=>{
+const getRedPacketParticipant = async (room, message) => {
     try {
-        const res = await db.danmu.findOne({room:room,message:message}).sort({sendTime:-1}).exec()
-        if (res === null){
-            return {status:true,message:`No result`}
+        const res = await db.danmu.findOne({room: room, message: message}).sort({sendTime: -1}).exec()
+        if (res === null) {
+            return {status: true, message: `No result`}
         }
-        return {status:true,message:'OK',uid:res["uid"]}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: 'OK', uid: res["uid"]}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 

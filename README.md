@@ -42,7 +42,6 @@ B站直播互动及数据收集机器人
 | AiReply     | Coding  | AI智能弹幕消息回复  |
 | SendChat    | Unused  | 弹幕发送支持库     |
 
-
 ## 环境依赖
 
 | Requirement          |

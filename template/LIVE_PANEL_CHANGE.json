@@ -1,1 +1,10 @@
-{"cmd":"LIVE_PANEL_CHANGE","data":{"type":2,"scatter":{"max":150,"min":5}}}
+{
+  "cmd": "LIVE_PANEL_CHANGE",
+  "data": {
+    "type": 2,
+    "scatter": {
+      "max": 150,
+      "min": 5
+    }
+  }
+}

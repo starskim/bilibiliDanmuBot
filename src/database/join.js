@@ -1,4 +1,4 @@
-const db = require ('./db')
+const db = require('./db')
 
 /**
  *
@@ -12,12 +12,12 @@ const db = require ('./db')
  * }} 用户加入信息
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const saveUserJoinInfo = async (info)=>{
+const saveUserJoinInfo = async (info) => {
     try {
         await new db.join(info).save()
-        return {status:true,message:'OK'}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: 'OK'}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 

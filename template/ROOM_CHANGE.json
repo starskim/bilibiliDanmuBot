@@ -1,1 +1,12 @@
-{"cmd":"ROOM_CHANGE","data":{"title":"【新V】哇好想啃一口啊","area_id":192,"parent_area_id":5,"area_name":"聊天电台","parent_area_name":"电台","live_key":"261009530584357309","sub_session_key":"261009530584357309sub_time:1658545171"}}
+{
+  "cmd": "ROOM_CHANGE",
+  "data": {
+    "title": "【新V】哇好想啃一口啊",
+    "area_id": 192,
+    "parent_area_id": 5,
+    "area_name": "聊天电台",
+    "parent_area_name": "电台",
+    "live_key": "261009530584357309",
+    "sub_session_key": "261009530584357309sub_time:1658545171"
+  }
+}

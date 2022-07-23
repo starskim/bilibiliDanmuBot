@@ -1,1 +1,6 @@
-{"cmd":"GOTO_BUY_FLOW","data":{"text":"蟹**等5人正在去买"}}
+{
+  "cmd": "GOTO_BUY_FLOW",
+  "data": {
+    "text": "蟹**等5人正在去买"
+  }
+}

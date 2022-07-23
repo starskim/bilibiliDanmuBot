@@ -1,1 +1,21 @@
-{"cmd":"PK_BATTLE_PROCESS","data":{"battle_type":1,"init_info":{"room_id":24697277,"votes":10,"best_uname":"给软软画的大饼","vision_desc":0},"match_info":{"room_id":10012745,"votes":0,"best_uname":"","vision_desc":0}},"pk_id":304179131,"pk_status":201,"timestamp":1658535525}
+{
+  "cmd": "PK_BATTLE_PROCESS",
+  "data": {
+    "battle_type": 1,
+    "init_info": {
+      "room_id": 24697277,
+      "votes": 10,
+      "best_uname": "给软软画的大饼",
+      "vision_desc": 0
+    },
+    "match_info": {
+      "room_id": 10012745,
+      "votes": 0,
+      "best_uname": "",
+      "vision_desc": 0
+    }
+  },
+  "pk_id": 304179131,
+  "pk_status": 201,
+  "timestamp": 1658535525
+}
