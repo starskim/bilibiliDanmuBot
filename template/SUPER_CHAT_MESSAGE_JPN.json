@@ -1,0 +1,51 @@
+{
+  "cmd": "SUPER_CHAT_MESSAGE_JPN",
+  "data": {
+    "id": "4596412",
+    "uid": "1822059122",
+    "price": 50,
+    "rate": 1000,
+    "message": "妈妈好帅！",
+    "message_jpn": "お母さんかっこいい！",
+    "is_ranked": 0,
+    "background_image": "https://i0.hdslb.com/bfs/live/a712efa5c6ebc67bafbe8352d3e74b820a00c13e.png",
+    "background_color": "#DBFFFD",
+    "background_icon": "",
+    "background_price_color": "#7DA4BD",
+    "background_bottom_color": "#427D9E",
+    "ts": 1658499256,
+    "token": "DC36FBF6",
+    "medal_info": {
+      "icon_id": 0,
+      "target_id": 480680646,
+      "special": "",
+      "anchor_uname": "阿萨Aza",
+      "anchor_roomid": 21696950,
+      "medal_level": 14,
+      "medal_name": "酷萨",
+      "medal_color": "#be6686"
+    },
+    "user_info": {
+      "uname": "坟头草两米五",
+      "face": "http://i2.hdslb.com/bfs/face/eda72ce62e45732751eb3786405acaea341c0d1b.jpg",
+      "face_frame": "",
+      "guard_level": 0,
+      "user_level": 0,
+      "level_color": "#969696",
+      "is_vip": 0,
+      "is_svip": 0,
+      "is_main_vip": 1,
+      "title": "0",
+      "manager": 0
+    },
+    "time": 119,
+    "start_time": 1658499255,
+    "end_time": 1658499375,
+    "gift": {
+      "num": 1,
+      "gift_id": 12000,
+      "gift_name": "醒目留言"
+    }
+  },
+  "roomid": "21696950"
+}

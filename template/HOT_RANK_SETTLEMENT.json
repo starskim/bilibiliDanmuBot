@@ -1,0 +1,15 @@
+{
+  "cmd": "HOT_RANK_SETTLEMENT",
+  "data": {
+    "area_name": "虚拟主播",
+    "cache_key": "769126c4c9ec0bd343f936aac8e9905e",
+    "dm_msg": "恭喜主播 <% 阿萨Aza %> 荣登限时热门榜虚拟主播榜top7! 即将获得热门流量推荐哦！",
+    "dmscore": 144,
+    "face": "http://i0.hdslb.com/bfs/face/d92f3bea64c4bac4e80909405bd126b8666e012d.jpg",
+    "icon": "https://i0.hdslb.com/bfs/live/63217712edb588864b2c714225992e7f46b0b917.png",
+    "rank": 7,
+    "timestamp": 1658498400,
+    "uname": "阿萨Aza",
+    "url": "https://live.bilibili.com/p/html/live-app-hotrank/result.html?is_live_half_webview=1&hybrid_half_ui=1,5,250,200,f4eefa,0,30,0,0,0;2,5,250,200,f4eefa,0,30,0,0,0;3,5,250,200,f4eefa,0,30,0,0,0;4,5,250,200,f4eefa,0,30,0,0,0;5,5,250,200,f4eefa,0,30,0,0,0;6,5,250,200,f4eefa,0,30,0,0,0;7,5,250,200,f4eefa,0,30,0,0,0;8,5,250,200,f4eefa,0,30,0,0,0&areaId=9&cache_key=769126c4c9ec0bd343f936aac8e9905e"
+  }
+}

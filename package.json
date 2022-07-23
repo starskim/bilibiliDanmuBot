@@ -1,42 +1,28 @@
 {
   "name": "bilibilidanmubot",
   "version": "1.0.0",
-  "description": "B站集成化工具",
+  "description": "",
   "main": "index.js",
-  "dependencies": {
-    "bilibili-live-ws": "^5.1.1",
-    "colors": "^1.4.0",
-    "conf": "^9.0.2",
-    "crypto": "^1.0.1",
-    "dotenv": "^8.2.0",
-    "got": "^11.8.2",
-    "md5": "^2.3.0",
-    "mysql": "^2.18.1",
-    "node-schedule": "^2.0.0",
-    "qs": "^6.9.6",
-    "tough-cookie": "^4.0.0",
-    "tough-cookie-file-store": "^2.0.2",
-    "typedi": "^0.10.0",
-    "url": "^0.11.0"
-  },
-  "devDependencies": {},
   "scripts": {
-    "test": "make test"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/older-fox/bilibiliDanmuBot.git"
   },
-  "keywords": [
-    "Danmu",
-    "Bilibili",
-    "Bot",
-    "Node.js"
-  ],
   "author": "OlderFox",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/older-fox/bilibiliDanmuBot/issues"
   },
-  "homepage": "https://github.com/older-fox/bilibiliDanmuBot#readme"
+  "homepage": "https://github.com/older-fox/bilibiliDanmuBot#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "colors": "^1.4.0",
+    "conf": "^10.1.2",
+    "ioredis": "^5.2.1",
+    "md5": "^2.3.0",
+    "mongoose": "^6.4.6",
+    "socket.io": "^4.5.1"
+  }
 }

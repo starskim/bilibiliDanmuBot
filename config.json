@@ -1,0 +1,19 @@
+{
+  "develop": {
+    "debug": false,
+    "danmu": false,
+    "gift": false,
+    "block": true,
+    "mute": true,
+    "join": false,
+    "redPacket": true
+  },
+  "database": {
+    "redis": "redis://127.0.0.1:6379/",
+    "mongoDB": "mongodb://localhost:27017/biliDashBoard"
+  },
+  "basic": {
+    "socketPort": 3000,
+    "webPort": 3001
+  }
+}

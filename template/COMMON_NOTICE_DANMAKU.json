@@ -1,0 +1,33 @@
+{
+  "cmd": "COMMON_NOTICE_DANMAKU",
+  "data": {
+    "content_segments": [
+      {
+        "background_color": null,
+        "background_color_dark": null,
+        "font_bold": false,
+        "font_color": "#F294AE",
+        "font_color_dark": "",
+        "highlight_font_color": "",
+        "highlight_font_color_dark": "",
+        "img_height": 0,
+        "img_url": "",
+        "img_width": 0,
+        "text": "恭喜阿萨Aza完成航海争霸赛lv.5任务！",
+        "type": 1
+      }
+    ],
+    "danmaku_style": {
+      "background_color": null,
+      "background_color_dark": null
+    },
+    "dmscore": 144,
+    "terminals": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  }
+}

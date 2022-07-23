@@ -1,0 +1,14 @@
+{
+  "cmd": "GUARD_BUY",
+  "data": {
+    "uid": 381534221,
+    "username": "狐狸狐兔兔",
+    "guard_level": 3,
+    "num": 1,
+    "price": 198000,
+    "gift_id": 10003,
+    "gift_name": "舰长",
+    "start_time": 1658503745,
+    "end_time": 1658503745
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "cmd": "HOT_RANK_SETTLEMENT_V2",
+  "data": {
+    "rank": 7,
+    "uname": "阿萨Aza",
+    "face": "http://i0.hdslb.com/bfs/face/d92f3bea64c4bac4e80909405bd126b8666e012d.jpg",
+    "timestamp": 1658498100,
+    "icon": "https://i0.hdslb.com/bfs/live/cb2e160ac4f562b347bb5ae6e635688ebc69580f.png",
+    "area_name": "虚拟主播",
+    "url": "https://live.bilibili.com/p/html/live-app-hotrank/result.html?is_live_half_webview=1&hybrid_half_ui=1,5,250,200,f4eefa,0,30,0,0,0;2,5,250,200,f4eefa,0,30,0,0,0;3,5,250,200,f4eefa,0,30,0,0,0;4,5,250,200,f4eefa,0,30,0,0,0;5,5,250,200,f4eefa,0,30,0,0,0;6,5,250,200,f4eefa,0,30,0,0,0;7,5,250,200,f4eefa,0,30,0,0,0;8,5,250,200,f4eefa,0,30,0,0,0&areaId=371&cache_key=ee26dc6cf43ae560200a7ceb48dfe5b4",
+    "cache_key": "ee26dc6cf43ae560200a7ceb48dfe5b4",
+    "dm_msg": "恭喜主播 <% 阿萨Aza %> 荣登限时热门榜虚拟主播榜top7! 即将获得热门流量推荐哦！"
+  }
+}

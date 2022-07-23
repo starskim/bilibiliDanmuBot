@@ -1,0 +1,35 @@
+{
+  "cmd": "ENTRY_EFFECT",
+  "data": {
+    "id": 135,
+    "uid": 4911405,
+    "target_id": 4911405,
+    "mock_effect": 0,
+    "face": "https://i0.hdslb.com/bfs/face/890c26cdec30b412e99a243369096112ce8f5a9e.jpg",
+    "privilege_type": 0,
+    "copy_writing": "欢迎 <%粉毛变态老狐狸%> 进入直播间",
+    "copy_color": "#000000",
+    "highlight_color": "#FFF100",
+    "priority": 1,
+    "basemap_url": "https://i0.hdslb.com/bfs/live/mlive/da6933ea70f31c4df63f4b68b735891284888357.png",
+    "show_avatar": 1,
+    "effective_time": 1,
+    "web_basemap_url": "https://i0.hdslb.com/bfs/live/mlive/da6933ea70f31c4df63f4b68b735891284888357.png",
+    "web_effective_time": 2,
+    "web_effect_close": 0,
+    "web_close_time": 900,
+    "business": 3,
+    "copy_writing_v2": "欢迎 <^icon^> <%粉毛变态老狐狸%> 进入直播间",
+    "icon_list": [
+      1
+    ],
+    "max_delay_time": 7,
+    "trigger_time": 1658501228165647600,
+    "identities": 22,
+    "effect_silent_time": 0,
+    "effective_time_new": 0,
+    "web_dynamic_url_webp": "",
+    "web_dynamic_url_apng": "",
+    "mobile_dynamic_url_webp": ""
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "cmd": "VIDEO_CONNECTION_MSG",
+  "data": {
+    "channel_id": "72057594038484865",
+    "current_time": 1658543894,
+    "dmscore": 4,
+    "toast": "主播发起了视频连线"
+  }
+}
