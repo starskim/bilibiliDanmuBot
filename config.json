@@ -6,7 +6,8 @@
     "block": true,
     "mute": true,
     "join": false,
-    "redPacket": true
+    "redPacket": true,
+    "anchor": true
   },
   "database": {
     "redis": "redis://127.0.0.1:6379/",

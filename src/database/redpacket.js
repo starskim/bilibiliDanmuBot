@@ -60,24 +60,6 @@ const pushWinnerUsersToRedPacketEvent = async (users, packetId) => {
 
 
 /**
- * 拉取指定房间中正在进行的红包事件
- * @param room {number} 房间号
- * @returns {Promise<{message: string, status: boolean, hash:Number?, danmu:String?}>}
- */
-const getInProgressRedPacketEvent = async (room) => {
-    try {
-        const res = await db.redPacket.findOne({room: room, 'time.end': {$gte: new Date()}}).exec()
-        if (res === null) {
-            return {status: true, message: `No result`}
-        }
-        return {status: true, message: `OK`, hash: res['hash'], danmu: res['message'].toString()}
-    } catch (e) {
-        return {status: false, message: e.message}
-    }
-}
-
-
-/**
  * 更新实际参与人数
  * @param pocketId {number}
  * @param amount {number}
@@ -100,7 +82,6 @@ const updateRedPacketUserAmount = async (pocketId, amount) => {
 module.exports = {
     saveNewRedPacketInfo,
     pushUserJoinRedPacketEvent,
-    getInProgressRedPacketEvent,
     updateRedPacketUserAmount,
     pushWinnerUsersToRedPacketEvent
 }

@@ -12,7 +12,7 @@ io.httpServer.on('error', err => {
     process.exit(10001)
 })
 
-io.on('connection', socket => {
+io.on('connection', async socket => {
     logger.info(`Remote client ${socket.id} has connected.`)
 
     socket.on('ROOM_MSG', async msg => {

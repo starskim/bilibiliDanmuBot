@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-
+//DANMU_MSG
 const danmuSchema = new Schema({
     uid: Number,       //发送人
     room: Number,      //房间号
@@ -22,6 +22,7 @@ const danmuSchema = new Schema({
 })
 
 
+//SEND_GIFT
 const giftSchema = new Schema({
     uid: Number,  //发送人
     room: Number,  //房间号
@@ -48,6 +49,7 @@ const giftSchema = new Schema({
 })
 
 
+//ROOM_BLOCK_MSG
 const blockSchema = new Schema({
     uid: Number,
     room: Number,
@@ -57,6 +59,9 @@ const blockSchema = new Schema({
     sendTime: {type: Date, default: Date.now}//发送时间
 })
 
+
+//ROOM_SILENT_OFF
+//ROOM_SILENT_ON
 const silentSchema = new Schema({
     room: Number,
     type: {type: String},
@@ -66,6 +71,8 @@ const silentSchema = new Schema({
     time: {type: Date, default: Date.now}//操作时间
 })
 
+
+//INTERACT_WORD
 const joinSchema = new Schema({
     room: Number,
     uid: Number,
@@ -78,6 +85,9 @@ const joinSchema = new Schema({
 })
 
 
+//DANMU_AGGREGATION
+//POPULARITY_RED_POCKET_START
+//POPULARITY_RED_POCKET_WINNER_LIST
 const redPocketSchema = new Schema({
     room: Number,
     hash: Number,
@@ -116,6 +126,8 @@ const redPocketSchema = new Schema({
     }
 })
 
+
+//GUARD_BUY
 const guardSchema = new Schema({
     room: Number,
     uid: Number,
@@ -129,6 +141,53 @@ const guardSchema = new Schema({
     }
 })
 
+
+//WATCHED_CHANGE
+const watchSchema = new Schema({
+    room: Number,
+    amount: Number,
+    time: {type: Date, default: Date.now}
+})
+
+//ANCHOR_LOT_AWARD
+const anchorSchema = new Schema({
+    room: Number, //房间号
+    hash: Number, //抽奖ID
+    amount:Number, //参与用户数量
+    infos: {
+        amount: Number, //奖励数量
+        name: String,   //抽奖名称
+        danmu: String, //弹幕要求
+        price: Number, //奖励
+        require: {
+            text: String,
+            type: {type: Number},
+            value: Number
+        }
+    },
+    winners: [{
+        uid: Number,  //UID
+        uname: String, //用户名
+        face: String, //avatar照片
+        level: Number, //用户UL等级
+        amount: Number,  //数量?中奖数量? 原key为 num
+        _id: false
+    }],
+    users: [{
+        uid: Number,
+        time: {type: Date, default: Date.now}
+    }],
+    time: {
+        start: Date,
+        duration: Number,
+        _id: false
+    }
+})
+
+const testSchema = new Schema({
+    info: String
+})
+
 const danmu = mongoose.model('danmu', danmuSchema)
 const gift = mongoose.model('gift', giftSchema)
 const block = mongoose.model('block', blockSchema)
@@ -136,6 +195,11 @@ const silent = mongoose.model('silent', silentSchema)
 const join = mongoose.model('join', joinSchema)
 const redPacket = mongoose.model('redPacket', redPocketSchema)
 const guard = mongoose.model('guard', guardSchema)
+const watch = mongoose.model('watch', watchSchema)
+const anchor = mongoose.model('anchor', anchorSchema)
+const test = mongoose.model('test', testSchema)
+
+
 module.exports = {
     danmu,
     gift,
@@ -143,5 +207,8 @@ module.exports = {
     silent,
     join,
     redPacket,
-    guard
+    guard,
+    watch,
+    anchor,
+    test
 }

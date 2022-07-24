@@ -1,8 +1,10 @@
 const logger = require('../local/logger')
 const {
-    saveNewRedPacketInfo, pushUserJoinRedPacketEvent, pushWinnerUsersToRedPacketEvent, getInProgressRedPacketEvent,
+    saveNewRedPacketInfo, pushUserJoinRedPacketEvent, pushWinnerUsersToRedPacketEvent,
     updateRedPacketUserAmount
 } = require("../database/redpacket");
+const {getAwardMessage, cacheAwardMessage} = require("../cache/award");
+const {pushUserJoinAnchorEvent, updateAnchorUserAmount} = require("../database/anchor");
 
 
 /**
@@ -42,6 +44,14 @@ const {
  * @returns {Promise<void>}
  */
 const processRedPacketStart = async (info, room) => {
+    //缓存红包信息到redis中
+    await cacheAwardMessage(room, JSON.stringify({
+        message: info.data.danmu,
+        type: 'redPacket',
+        hash: info.data.lot_id
+    }), info.data.last_time)
+
+    //构建要保存到数据中的Document
     try {
         const awards = []
         for (let i = 0; i < info.data.awards.length; i++) {
@@ -83,28 +93,34 @@ const processRedPacketStart = async (info, room) => {
 }
 
 /**
- * 处理红包事件操作
+ * 处理红包/天选事件事件操作
  * @param room {number} 房间号
  * @param message {string} 消息
  * @param uid {Number} 用户uid
  * @returns {Promise<void>}
  */
-const processRedPacketJoin = async (room, message, uid) => {
+const processRedPacketOrAnchorJoin = async (room, message, uid) => {
     try {
-        const event = await getInProgressRedPacketEvent(room) //拉取正在进行中的红包事件
-        if (event.status === false) {
-            logger.warn(`An error occurred when check redPacket events from database, message:${event.message}`)
+        const res = JSON.parse(await getAwardMessage(room))
+        console.log(res)
+        if (res === null || message !== res.message) {
             return
         }
-        if (event.hash === undefined || message !== event.danmu) { //如果没有正在进行的事件或消息不等同于正在进行的事件消息
+        if (res.type === 'anchor') {
+            const operationRes = await pushUserJoinAnchorEvent({uid: uid, hash: res.hash})
+            if (operationRes.status === false) {
+                logger.warn(`An error occurred when saving anchor update to database, message:${operationRes.message}`)
+            }
             return
         }
-        const operationRes = await pushUserJoinRedPacketEvent(uid, event.hash)
-        if (operationRes.status === false) {
-            logger.warn(`An error occurred when saving redPacket update to database, message:${operationRes.message}`)
+        if (res.type === 'redPacket') {
+            const operationRes = await pushUserJoinRedPacketEvent(uid, res.hash)
+            if (operationRes.status === false) {
+                logger.warn(`An error occurred when saving redPacket update to database, message:${operationRes.message}`)
+            }
         }
     } catch (e) {
-        logger.warn(`An error occurred when saving redPacket update, message:${e.message}`)
+        logger.warn(`An error occurred when saving redPacket/anchor update, message:${e.message}`)
     }
 }
 
@@ -161,23 +177,36 @@ const processRedPacketEnd = async (info) => {
  *     "show_time": Number,
  *     "timestamp": Number
  *   }
- * }} 红包实际状态信息
+ * }} 事件信息
+ * @param room {Number} 房间号
  * @returns {Promise<void>}
  */
-const processRedPacketAggregation = async (info) => {
+const processRedPacketOrAnchorAggregation = async (info,room) => {
     try {
-        const res = await updateRedPacketUserAmount(Number.parseInt(info.data.activity_identity), info.data.aggregation_num)
-        if (res.status === false) {
-            logger.warn(`An error occurred when saving redPacket update to database, message:${res.message}`)
+        const res = JSON.parse(await getAwardMessage(room))
+        if (res === null || message !== res.message) {
+            return
+        }
+        if (res.type === 'anchor'){
+            const operationResult = await updateAnchorUserAmount(res.hash, info.data.aggregation_num)
+            if (operationResult.status === false) {
+                logger.warn(`An error occurred when saving anchor update to database, message:${res.message}`)
+            }
+        }
+        if (res.type === 'redPacket'){
+            const operationResult = await updateRedPacketUserAmount(res.hash, info.data.aggregation_num)
+            if (operationResult.status === false) {
+                logger.warn(`An error occurred when saving redPacket update to database, message:${res.message}`)
+            }
         }
     } catch (e) {
-        logger.warn(`An error occurred when saving redPacket update, message:${e.message}`)
+        logger.warn(`An error occurred when saving redPacket/anchor update, message:${e.message}`)
     }
 }
 
 module.exports = {
     processRedPacketStart,
-    processRedPacketJoin,
+    processRedPacketOrAnchorJoin,
     processRedPacketEnd,
-    processRedPacketAggregation
+    processRedPacketOrAnchorAggregation
 }

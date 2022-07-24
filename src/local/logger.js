@@ -56,7 +56,13 @@ module.exports = {
         if (develop.redPacket === false) {
             return
         }
-        console.log(color.red('[redPacket]' + '[' + getFormatTime() + ']: '), ...args);
+        console.log(color.red('[RED PACKET]' + '[' + getFormatTime() + ']: '), ...args);
+    },
+    anchor(...args) {
+        if (develop.anchor === false) {
+            return
+        }
+        console.log(color.red('[ANCHOR]' + '[' + getFormatTime() + ']: '), ...args);
     },
     info(...args) {
         console.log(color.magenta('[INFO]') + '[' + getFormatTime() + ']:', ...args);

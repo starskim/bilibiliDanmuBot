@@ -10,11 +10,13 @@ const {processRoomSilentOperation} = require("./silent");
 const {processInteractMessage} = require("./interact");
 const {
     processRedPacketStart,
-    processRedPacketJoin,
     processRedPacketEnd,
-    processRedPacketAggregation
+    processRedPacketOrAnchorJoin, processRedPacketOrAnchorAggregation
 } = require("./redpacket");
 const {processNewGuardInfo} = require("./guard");
+const {processWatchUpdate} = require("./watch");
+const {processAnchorStart, processAnchorResult} = require("./anchor");
+const {saveAllEvent} = require("../database/test");
 
 /**
  * 处理客户端发过来的所有直播消息,进行去重后转交下级处理程序
@@ -28,6 +30,7 @@ const processLiveMessage = async (message, client) => {
         if (cacheRes) {
             return
         }
+        await saveAllEvent(JSON.stringify(message.info))
         //await fs.writeFileSync(path.resolve(`./template/${message.info.cmd}.json`),JSON.stringify(message.info))
         if (fs.existsSync(path.resolve(`./template/${message.info.cmd}.json`)) === false) {
             await fs.writeFileSync(path.resolve(`./template/${message.info.cmd}.json`), JSON.stringify(message.info))
@@ -35,7 +38,7 @@ const processLiveMessage = async (message, client) => {
         switch (message.info.cmd) {
             case 'DANMU_MSG': //弹幕消息
                 await processDanmuMessage(message.info, message.room)
-                await processRedPacketJoin(message.room, message.info.info[1], message.info.info[2][0])//处理可能存在的红包事件
+                await processRedPacketOrAnchorJoin(message.room, message.info.info[1], message.info.info[2][0])//处理可能存在的红包事件
                 break
 
             case 'SEND_GIFT': //礼物发送消息
@@ -65,9 +68,9 @@ const processLiveMessage = async (message, client) => {
                 await processRedPacketEnd(message.info)
                 break
 
-            case 'DANMU_AGGREGATION':  //红包被参与一次
+            case 'DANMU_AGGREGATION':  //红包or天选被参与一次
                 //NOTE：这个方法无法成功同步每一次加入,故废弃,仅用于参与人数校准
-                await processRedPacketAggregation(message.info)
+                await processRedPacketOrAnchorAggregation(message.info,message.room)
                 break
             case 'GUARD_BUY'://新舰长
                 await processNewGuardInfo(message.info, message.room)
@@ -75,6 +78,22 @@ const processLiveMessage = async (message, client) => {
 
             case 'POPULARITY_RED_POCKET_START': //开始红包抽奖
                 await processRedPacketStart(message.info, message.room)
+                break
+
+            case 'NOTICE_MSG': //通知信息
+                await fs.writeFileSync(path.resolve(`./template/${message.info.cmd}[${message.info.id}].json`), JSON.stringify(message.info))
+                break
+
+            case 'WATCHED_CHANGE': //观看人数更新
+                await processWatchUpdate(message.info, message.room)
+                break
+
+            case 'ANCHOR_LOT_START':
+                await processAnchorStart(message.info, message.room)
+                break
+
+            case 'ANCHOR_LOT_AWARD':
+                await processAnchorResult(message.info)
                 break
 
             default:

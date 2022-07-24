@@ -17,7 +17,7 @@ const processBlockMessage = async (info, room) => {
             name: info.data.uname,
             dmscore: info.data.dmscore
         }
-        logger.block(`[${info.data.uname}] has been blocked by room ${room}, operator:${info.data.operator}`)
+        logger.block(`${info.data.uname} has been blocked by room ${room}, operator:${info.data.operator}`)
         const res = await saveBlockMessage(blockInfo)
         if (res.status === false) {
             logger.warn(`An error occurred when saving user block info to database, message:${res.message}`)
