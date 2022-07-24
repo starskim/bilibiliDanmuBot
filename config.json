@@ -3,12 +3,12 @@
     "debug": false,
     "danmu": false,
     "gift": false,
-    "block": true,
-    "mute": true,
+    "block": false,
+    "mute": false,
     "join": false,
-    "redPacket": true,
-    "anchor": true,
-    "PK": true
+    "redPacket": false,
+    "anchor": false,
+    "pk": false
   },
   "database": {
     "redis": "redis://127.0.0.1:6379/",

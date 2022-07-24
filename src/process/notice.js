@@ -52,21 +52,21 @@ const {saveNoticeInfo} = require("../database/notice");
  * }}
  * @returns {Promise<void>}
  */
-const processNoticeMessage = async (info)=>{
+const processNoticeMessage = async (info) => {
     try {
         const noticeInfo = {
-            room:info.roomid,
-            type:info.id,
-            name:info.name,
-            message:info.msg_common,
-            businessHash:Number.parseInt(info.business_id),
-            selfMessage:info.msg_self
+            room: info.roomid,
+            type: info.id,
+            name: info.name,
+            message: info.msg_common,
+            businessHash: Number.parseInt(info.business_id),
+            selfMessage: info.msg_self
         }
         const res = await saveNoticeInfo(noticeInfo)
-        if (res.status === false ){
+        if (res.status === false) {
             logger.warn(`An error occurred when saving notice info to database, message:${res.message}`)
         }
-    }catch (e) {
+    } catch (e) {
         logger.warn(`An error occurred when saving notice info, message:${e.message}`)
     }
 }

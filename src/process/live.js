@@ -11,14 +11,20 @@ const {processInteractMessage} = require("./interact");
 const {
     processRedPacketStart,
     processRedPacketEnd,
-    processRedPacketOrAnchorJoin, processRedPacketOrAnchorAggregation
+    processRedPacketOrAnchorJoin,
+    processRedPacketOrAnchorAggregation
 } = require("./redpacket");
 const {processNewGuardInfo} = require("./guard");
 const {processWatchUpdate} = require("./watch");
 const {processAnchorStart, processAnchorResult} = require("./anchor");
 const {saveAllEvent} = require("../database/test");
 const {processNoticeMessage} = require("./notice");
-const {processBattleStart, processBattleProgressInfo, processBattleResult, processBattleAssistInfo} = require("./battle");
+const {
+    processBattleStart,
+    processBattleProgressInfo,
+    processBattleResult,
+    processBattleAssistInfo
+} = require("./battle");
 
 /**
  * 处理客户端发过来的所有直播消息,进行去重后转交下级处理程序
@@ -28,11 +34,13 @@ const {processBattleStart, processBattleProgressInfo, processBattleResult, proce
  */
 const processLiveMessage = async (message, client) => {
     try {
+        /**
         const cacheRes = await cacheLiveMessage(JSON.stringify(message.info), 10)
         if (cacheRes) {
             return
         }
-        await saveAllEvent(JSON.stringify(message.info))
+         **/
+        //await saveAllEvent(JSON.stringify(message.info))
         //await fs.writeFileSync(path.resolve(`./template/${message.info.cmd}.json`),JSON.stringify(message.info))
         switch (message.info.cmd) {
             case 'DANMU_MSG': //弹幕消息
@@ -69,7 +77,7 @@ const processLiveMessage = async (message, client) => {
 
             case 'DANMU_AGGREGATION':  //红包or天选被参与一次
                 //NOTE：这个方法无法成功同步每一次加入,故废弃,仅用于参与人数校准
-                await processRedPacketOrAnchorAggregation(message.info,message.room)
+                await processRedPacketOrAnchorAggregation(message.info, message.room)
                 break
             case 'GUARD_BUY'://新舰长
                 await processNewGuardInfo(message.info, message.room)
@@ -96,19 +104,19 @@ const processLiveMessage = async (message, client) => {
                 break
 
             case 'PK_BATTLE_START_NEW': //PK大乱斗开始
-                await processBattleStart(message.info,message.room)
+                await processBattleStart(message.info, message.room)
                 break
 
             case 'PK_BATTLE_PROCESS': //PK大乱斗比分情况变更
-                await processBattleProgressInfo(message.info,message.room)
+                await processBattleProgressInfo(message.info, message.room)
                 break
 
             case 'PK_BATTLE_SETTLE_USER': //PK大乱斗结束
-                await processBattleResult(message.info,message.room)
+                await processBattleResult(message.info, message.room)
                 break
 
             case 'PK_BATTLE_SETTLE_V2': //PK大乱斗结束,携带本次乱斗基本信息
-                await processBattleAssistInfo(message.info,message.room)
+                await processBattleAssistInfo(message.info, message.room)
                 break
 
             default:

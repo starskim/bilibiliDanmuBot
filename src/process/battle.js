@@ -1,5 +1,10 @@
 const logger = require('../local/logger')
-const {saveNewBattleInfo, updateBattleProgressInfo, updateBattleResult, updateBattleAssistUsers} = require("../database/battle");
+const {
+    saveNewBattleInfo,
+    updateBattleProgressInfo,
+    updateBattleResult,
+    updateBattleAssistUsers
+} = require("../database/battle");
 
 
 /**
@@ -39,47 +44,47 @@ const {saveNewBattleInfo, updateBattleProgressInfo, updateBattleResult, updateBa
  * @param room {Number}
  * @returns {Promise<void>}
  */
-const processBattleStart = async (infos,room)=>{
+const processBattleStart = async (infos, room) => {
     try {
         let battleInfo
         //可能存在init_info 和 match_info 反着来的状态,修正翻转一下
-        if (infos.data.init_info.room_id === room){
+        if (infos.data.init_info.room_id === room) {
             battleInfo = {
-                room:room,
-                hash:infos.pk_id,
-                info:{
-                    target:infos.data.match_info.room_id,
-                    self:infos.data.init_info.room_id,
-                    voteName:infos.data.pk_votes_name,
-                    type:infos.data.battle_type
+                room: room,
+                hash: infos.pk_id,
+                info: {
+                    target: infos.data.match_info.room_id,
+                    self: infos.data.init_info.room_id,
+                    voteName: infos.data.pk_votes_name,
+                    type: infos.data.battle_type
                 },
-                time:{
-                    start:new Date(infos.data.pk_start_time * 1000),
-                    end:new Date(infos.data.pk_end_time * 1000)
+                time: {
+                    start: new Date(infos.data.pk_start_time * 1000),
+                    end: new Date(infos.data.pk_end_time * 1000)
                 }
             }
-        }else{
+        } else {
             battleInfo = {
-                room:room,
-                hash:infos.pk_id,
-                info:{
-                    target:infos.data.init_info.room_id,
-                    self:infos.data.match_info.room_id,
-                    voteName:infos.data.pk_votes_name,
-                    type:infos.data.battle_type
+                room: room,
+                hash: infos.pk_id,
+                info: {
+                    target: infos.data.init_info.room_id,
+                    self: infos.data.match_info.room_id,
+                    voteName: infos.data.pk_votes_name,
+                    type: infos.data.battle_type
                 },
-                time:{
-                    start:new Date(infos.data.pk_start_time * 1000),
-                    end:new Date(infos.data.pk_end_time * 1000)
+                time: {
+                    start: new Date(infos.data.pk_start_time * 1000),
+                    end: new Date(infos.data.pk_end_time * 1000)
                 }
             }
         }
         logger.pk(`Room ${room} started an pk battle with room ${battleInfo.info.target}.`)
         const res = await saveNewBattleInfo(battleInfo)
-        if (res.status === false){
+        if (res.status === false) {
             logger.warn(`An error occurred when saving new battle info to database, message:${res.message}`)
         }
-    }catch (e) {
+    } catch (e) {
         logger.warn(`An error occurred when saving new battle info, message:${e.message}`)
     }
 }
@@ -111,50 +116,50 @@ const processBattleStart = async (infos,room)=>{
  * @param room {Number}
  * @returns {Promise<void>}
  */
-const processBattleProgressInfo = async (infos,room)=>{
+const processBattleProgressInfo = async (infos, room) => {
     try {
         let progressInfo
         //可能存在init_info 和 match_info 反着来的状态,修正翻转一下
-        if (infos.data.init_info.room_id === room){
+        if (infos.data.init_info.room_id === room) {
             progressInfo = {
-                room:room,
-                hash:infos.pk_id,
-                progress:{
-                    self:{
-                        room:infos.data.init_info.room_id,
-                        votes:infos.data.init_info.votes,
-                        bestUser:infos.data.init_info.best_uname
+                room: room,
+                hash: infos.pk_id,
+                progress: {
+                    self: {
+                        room: infos.data.init_info.room_id,
+                        votes: infos.data.init_info.votes,
+                        bestUser: infos.data.init_info.best_uname
                     },
-                    target:{
-                        room:infos.data.match_info.room_id,
-                        votes:infos.data.match_info.votes,
-                        bestUser:infos.data.match_info.best_uname
+                    target: {
+                        room: infos.data.match_info.room_id,
+                        votes: infos.data.match_info.votes,
+                        bestUser: infos.data.match_info.best_uname
                     }
                 }
             }
-        }else{
+        } else {
             progressInfo = {
-                room:room,
-                hash:infos.pk_id,
-                progress:{
-                    self:{
-                        room:infos.data.match_info.room_id,
-                        votes:infos.data.match_info.votes,
-                        bestUser:infos.data.match_info.best_uname
+                room: room,
+                hash: infos.pk_id,
+                progress: {
+                    self: {
+                        room: infos.data.match_info.room_id,
+                        votes: infos.data.match_info.votes,
+                        bestUser: infos.data.match_info.best_uname
                     },
-                    target:{
-                        room:infos.data.init_info.room_id,
-                        votes:infos.data.init_info.votes,
-                        bestUser:infos.data.init_info.best_uname
+                    target: {
+                        room: infos.data.init_info.room_id,
+                        votes: infos.data.init_info.votes,
+                        bestUser: infos.data.init_info.best_uname
                     }
                 }
             }
         }
         const res = await updateBattleProgressInfo(progressInfo)
-        if (res.status === false){
+        if (res.status === false) {
             logger.warn(`An error occurred when saving battle progress info to database, message:${res.message}`)
         }
-    }catch (e) {
+    } catch (e) {
         logger.warn(`An error occurred when saving battle progress info, message:${e.message}`)
     }
 }
@@ -229,7 +234,7 @@ const processBattleProgressInfo = async (infos,room)=>{
  *           "list": Array
  *         }
  *       }
- *     },
+ *     }|null,
  *     "my_info": {
  *       "room_id": Number,
  *       "uid": Number,
@@ -278,51 +283,78 @@ const processBattleProgressInfo = async (infos,room)=>{
  * @param room {Number}
  * @returns {Promise<void>}
  */
-const processBattleResult = async (infos,room)=>{
+const processBattleResult = async (infos, room) => {
     try {
-        const resultInfo = {
-            room:room,
-            hash:infos.pk_id,
-            winner:{
-                room:infos.data.winner.room_id,
-                uid:infos.data.winner.uid,
-                name:infos.data.winner.uname,
-                face:infos.data.winner.face,
-                exp:{
-                    level:infos.data.winner.exp.user_level,
-                    ulLevel:infos.data.winner.exp.master_level.level
-                },
-                bestUser:{
-                    uid:infos.data.winner.best_user.uid,
-                    name:infos.data.winner.best_user.uname,
-                    face:infos.data.winner.best_user.face,
-                    votes:infos.data.winner.best_user.pk_votes,
-                    ulLevel:infos.data.winner.best_user.exp.level
-                }
+        const selfInfo = {
+            room: infos.data.my_info.room_id,
+            uid: infos.data.my_info.uid,
+            name: infos.data.my_info.uname,
+            face: infos.data.my_info.face,
+            exp: {
+                level: infos.data.my_info.exp.user_level,
+                ulLevel: infos.data.my_info.exp.master_level.level
             },
-            self:{
-                room:infos.data.my_info.room_id,
-                uid:infos.data.my_info.uid,
-                name:infos.data.my_info.uname,
-                face:infos.data.my_info.face,
-                exp:{
-                    level:infos.data.my_info.exp.user_level,
-                    ulLevel:infos.data.my_info.exp.master_level.level
+            bestUser: {
+                uid: infos.data.my_info.best_user.uid,
+                name: infos.data.my_info.best_user.uname,
+                face: infos.data.my_info.best_user.face,
+                votes: infos.data.my_info.best_user.pk_votes,
+                ulLevel: infos.data.my_info.best_user.exp.level
+            }
+        }
+        let resultInfo
+        if (infos.data.winner === null) {
+            resultInfo = {
+                room: room,
+                hash: infos.pk_id,
+                winner: {
+                    room: '',
+                    uid: 0,
+                    name: '',
+                    face: '',
+                    exp: {
+                        level: 0,
+                        ulLevel: 0
+                    },
+                    bestUser: {
+                        uid: 0,
+                        name: '',
+                        face: '',
+                        votes: 0,
+                        ulLevel: 0
+                    }
                 },
-                bestUser:{
-                    uid:infos.data.my_info.best_user.uid,
-                    name:infos.data.my_info.best_user.uname,
-                    face:infos.data.my_info.best_user.face,
-                    votes:infos.data.my_info.best_user.pk_votes,
-                    ulLevel:infos.data.my_info.best_user.exp.level
-                }
+                selfInfo: selfInfo
+            }
+        } else {
+            resultInfo = {
+                room: room,
+                hash: infos.pk_id,
+                winner: {
+                    room: infos.data.winner.room_id,
+                    uid: infos.data.winner.uid,
+                    name: infos.data.winner.uname,
+                    face: infos.data.winner.face,
+                    exp: {
+                        level: infos.data.winner.exp.user_level,
+                        ulLevel: infos.data.winner.exp.master_level.level
+                    },
+                    bestUser: {
+                        uid: infos.data.winner.best_user.uid,
+                        name: infos.data.winner.best_user.uname,
+                        face: infos.data.winner.best_user.face,
+                        votes: infos.data.winner.best_user.pk_votes,
+                        ulLevel: infos.data.winner.best_user.exp.level
+                    }
+                },
+                selfInfo: selfInfo
             }
         }
         const res = await updateBattleResult(resultInfo)
-        if (res.status === false){
+        if (res.status === false) {
             logger.warn(`An error occurred when saving battle result info to database, message:${res.message}`)
         }
-    }catch (e) {
+    } catch (e) {
         logger.warn(`An error occurred when saving battle result info, message:${e.message}`)
     }
 }
@@ -366,7 +398,7 @@ const processBattleResult = async (infos,room)=>{
  * @param room {Number}
  * @returns {Promise<void>}
  */
-const processBattleAssistInfo = async (infos,room)=>{
+const processBattleAssistInfo = async (infos, room) => {
     try {
         /**
          *
@@ -380,26 +412,25 @@ const processBattleAssistInfo = async (infos,room)=>{
         const userList = []
         for (let i = 0; i < infos.data.assist_list.length; i++) {
             userList.push({
-                id:infos.data.assist_list[i].id,
-                name:infos.data.assist_list[i].uname,
-                face:infos.data.assist_list[i].face,
-                score:infos.data.assist_list[i].score
+                id: infos.data.assist_list[i].id,
+                name: infos.data.assist_list[i].uname,
+                face: infos.data.assist_list[i].face,
+                score: infos.data.assist_list[i].score
             })
         }
         const assistInfo = {
-            room:room,
-            hash:infos.pk_id,
-            users:userList
+            room: room,
+            hash: infos.pk_id,
+            users: userList
         }
         const res = await updateBattleAssistUsers(assistInfo)
-        if (res.status === false){
+        if (res.status === false) {
             logger.warn(`An error occurred when saving battle assist users info to database, message:${res.message}`)
         }
-    }catch (e) {
+    } catch (e) {
         logger.warn(`An error occurred when saving battle assist users info to database, message:${e.message}`)
     }
 }
-
 
 
 module.exports = {

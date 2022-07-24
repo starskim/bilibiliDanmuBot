@@ -19,12 +19,12 @@ const db = require('./db')
  * }}
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const saveNewBattleInfo = async (infos)=>{
+const saveNewBattleInfo = async (infos) => {
     try {
         await new db.battle(infos).save()
-        return {status:true,message:`OK`}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: `OK`}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 
@@ -49,16 +49,16 @@ const saveNewBattleInfo = async (infos)=>{
  * }}
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const updateBattleProgressInfo = async (infos)=>{
+const updateBattleProgressInfo = async (infos) => {
     try {
-        await db.battle.updateOne({room:infos.room,hash:infos.hash},{
-            $push:{
+        await db.battle.updateOne({room: infos.room, hash: infos.hash}, {
+            $push: {
                 progress: infos.progress
             }
         }).exec()
-        return {status:true,message:'OK'}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: 'OK'}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 
@@ -105,17 +105,17 @@ const updateBattleProgressInfo = async (infos)=>{
  * }}
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const updateBattleResult = async (infos)=>{
+const updateBattleResult = async (infos) => {
     try {
-        await db.battle.updateOne({room:infos.room,hash:infos.hash},{
-            $set:{
-                winner:infos.winner,
-                self:infos.self
+        await db.battle.updateOne({room: infos.room, hash: infos.hash}, {
+            $set: {
+                winner: infos.winner,
+                self: infos.self
             }
         }).exec()
-        return {status:true,message:'OK'}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: 'OK'}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 
@@ -134,16 +134,16 @@ const updateBattleResult = async (infos)=>{
  * }}
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const updateBattleAssistUsers= async (infos)=>{
+const updateBattleAssistUsers = async (infos) => {
     try {
-        await db.battle.updateOne({room:infos.room,hash:infos.hash},{
-            $push:{
+        await db.battle.updateOne({room: infos.room, hash: infos.hash}, {
+            $push: {
                 assistList: infos.users
             }
         }).exec()
-        return {status:true,message:'OK'}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: 'OK'}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 

@@ -180,19 +180,19 @@ const processRedPacketEnd = async (info) => {
  * @param room {Number} 房间号
  * @returns {Promise<void>}
  */
-const processRedPacketOrAnchorAggregation = async (info,room) => {
+const processRedPacketOrAnchorAggregation = async (info, room) => {
     try {
         const res = JSON.parse(await getAwardMessage(room))
         if (res === null) {
             return
         }
-        if (res.type === 'anchor'){
+        if (res.type === 'anchor') {
             const operationResult = await updateAnchorUserAmount(res.hash, info.data.aggregation_num)
             if (operationResult.status === false) {
                 logger.warn(`An error occurred when saving anchor update to database, message:${res.message}`)
             }
         }
-        if (res.type === 'redPacket'){
+        if (res.type === 'redPacket') {
             const operationResult = await updateRedPacketUserAmount(res.hash, info.data.aggregation_num)
             if (operationResult.status === false) {
                 logger.warn(`An error occurred when saving redPacket update to database, message:${res.message}`)

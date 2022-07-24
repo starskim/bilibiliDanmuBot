@@ -116,7 +116,7 @@ const processAnchorStart = async (info, room) => {
         const anchorInfo = {
             room: room,
             hash: info.data.id,
-            amount:0,
+            amount: 0,
             infos: {
                 amount: info.data.gift_num,
                 name: info.data.award_name,
@@ -143,7 +143,6 @@ const processAnchorStart = async (info, room) => {
         logger.warn(`An error occurred when saving anchor start info to database, message:${e.message}`)
     }
 }
-
 
 
 module.exports = {

@@ -61,16 +61,16 @@ const pushUserJoinAnchorEvent = async (info) => {
  * @param amount {Number}
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const updateAnchorUserAmount = async (hash,amount)=>{
+const updateAnchorUserAmount = async (hash, amount) => {
     try {
-        await db.anchor.updateOne({hash:hash},{
-            $set:{
-                amount:amount
+        await db.anchor.updateOne({hash: hash}, {
+            $set: {
+                amount: amount
             }
         }).exec()
-        return {status:true,message:'OK'}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: 'OK'}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 module.exports = {
