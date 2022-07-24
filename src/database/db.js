@@ -184,6 +184,96 @@ const anchorSchema = new Schema({
     }
 })
 
+//NOTICE_MSG
+const noticeSchema = new Schema({
+    room:Number,
+    type:{type:Number},
+    name:String,
+    message:String,
+    businessHash:String,
+    selfMessage:String,
+    time:{type:Date,default:Date.now}
+})
+
+
+const battleSchema = new Schema({
+    room:Number,
+    hash:Number,
+    info:{
+        target:Number,
+        self:Number,
+        voteName:String,
+        type:{type:Number},
+        _id:false
+    },
+    winner:{
+        room:Number,
+        uid:Number,
+        name:String,
+        face:String,
+        exp:{
+            level:Number,
+            ulLevel:Number,
+            _id:false
+        },
+        bestUser:{
+            uid:Number,
+            name:String,
+            face:String,
+            votes:Number,
+            ulLevel:Number
+        },
+        _id:false
+    },
+    self:{
+        room:Number,
+        uid:Number,
+        name:String,
+        face:String,
+        exp:{
+            level:Number,
+            ulLevel:Number,
+            _id:false
+        },
+        bestUser:{
+            uid:Number,
+            name:String,
+            face:String,
+            votes:Number,
+            ulLevel:Number
+        },
+        _id:false
+    },
+    progress:[{
+        self:{
+            room:Number,
+            votes:Number,
+            bestUser:String,
+            time:{type:Date,default:Date.now},
+            _id:false,
+        },
+        target:{
+            room:Number,
+            votes:Number,
+            bestUser:String,
+            time:{type:Date,default:Date.now},
+            _id:false,
+        },
+        _id:false
+    }],
+    assistList:[{
+        id:Number,
+        name:String,
+        face:String,
+        score:Number
+    }],
+    time:{
+        start:Date,
+        end:Date,
+        _id:false
+    }
+},{minimize:false})
+
 const testSchema = new Schema({
     info: String
 })
@@ -198,7 +288,8 @@ const guard = mongoose.model('guard', guardSchema)
 const watch = mongoose.model('watch', watchSchema)
 const anchor = mongoose.model('anchor', anchorSchema)
 const test = mongoose.model('test', testSchema)
-
+const notice = mongoose.model('notice',noticeSchema)
+const battle = mongoose.model('battle',battleSchema)
 
 module.exports = {
     danmu,
@@ -210,5 +301,7 @@ module.exports = {
     guard,
     watch,
     anchor,
-    test
+    test,
+    notice,
+    battle
 }

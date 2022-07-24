@@ -64,6 +64,12 @@ module.exports = {
         }
         console.log(color.red('[ANCHOR]' + '[' + getFormatTime() + ']: '), ...args);
     },
+    pk(...args) {
+        if (develop.pk === false) {
+            return
+        }
+        console.log(color.red('[PK BATTLE]' + '[' + getFormatTime() + ']: '), ...args);
+    },
     info(...args) {
         console.log(color.magenta('[INFO]') + '[' + getFormatTime() + ']:', ...args);
     },

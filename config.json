@@ -7,7 +7,8 @@
     "mute": true,
     "join": false,
     "redPacket": true,
-    "anchor": true
+    "anchor": true,
+    "PK": true
   },
   "database": {
     "redis": "redis://127.0.0.1:6379/",

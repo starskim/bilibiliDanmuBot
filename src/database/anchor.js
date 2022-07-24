@@ -47,8 +47,7 @@ const pushUserJoinAnchorEvent = async (info) => {
         await db.anchor.updateOne({hash: info.hash}, {
             $push: {
                 users: {uid: info.uid}
-            },
-            $inc:{amount:1}
+            }
         }).exec()
         return {status: true, message: 'OK'}
     } catch (e) {

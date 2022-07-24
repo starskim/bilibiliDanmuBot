@@ -1,9 +1,0 @@
-{
-  "cmd": "LIVE_MULTI_VIEW_CHANGE",
-  "data": {
-    "scatter": {
-      "max": 120,
-      "min": 5
-    }
-  }
-}

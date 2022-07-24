@@ -29,8 +29,7 @@ const pushUserJoinRedPacketEvent = async (uid, packetId) => {
                 users: {
                     uid: uid
                 }
-            },
-            $inc: {amount: 1}
+            }
         }).exec()
         return {status: true, message: 'OK'}
     } catch (e) {
