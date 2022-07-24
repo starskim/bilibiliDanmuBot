@@ -102,7 +102,6 @@ const processRedPacketStart = async (info, room) => {
 const processRedPacketOrAnchorJoin = async (room, message, uid) => {
     try {
         const res = JSON.parse(await getAwardMessage(room))
-        console.log(res)
         if (res === null || message !== res.message) {
             return
         }
@@ -184,7 +183,7 @@ const processRedPacketEnd = async (info) => {
 const processRedPacketOrAnchorAggregation = async (info,room) => {
     try {
         const res = JSON.parse(await getAwardMessage(room))
-        if (res === null || message !== res.message) {
+        if (res === null) {
             return
         }
         if (res.type === 'anchor'){

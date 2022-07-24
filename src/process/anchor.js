@@ -116,6 +116,7 @@ const processAnchorStart = async (info, room) => {
         const anchorInfo = {
             room: room,
             hash: info.data.id,
+            amount:0,
             infos: {
                 amount: info.data.gift_num,
                 name: info.data.award_name,
@@ -129,7 +130,7 @@ const processAnchorStart = async (info, room) => {
             },
             winners: [],
             time: {
-                start: new Date(info.data.current_time),
+                start: new Date(info.data.current_time * 1000),
                 duration: info.data.max_time
             }
         }
