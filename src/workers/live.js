@@ -1,30 +1,38 @@
 const logger = require('../local/logger')
-const fs = require('fs')
-const path = require('path')
-const {processDanmuMessage} = require("./danmu");
-const {processGiftMessage} = require("./gift");
-const {cacheOnlineMessage} = require("../cache/online");
+const config = require('../local/config')
+const {processDanmuMessage} = require("../process/danmu");
+const {processGiftMessage} = require("../process/gift");
 const {cacheLiveMessage} = require("../cache/live");
-const {processBlockMessage} = require("./block");
-const {processRoomSilentOperation} = require("./silent");
-const {processInteractMessage} = require("./interact");
+const {processBlockMessage} = require("../process/block");
+const {processRoomSilentOperation} = require("../process/silent");
+const {processInteractMessage} = require("../process/interact");
 const {
     processRedPacketStart,
     processRedPacketEnd,
     processRedPacketOrAnchorJoin,
     processRedPacketOrAnchorAggregation
-} = require("./redpacket");
-const {processNewGuardInfo} = require("./guard");
-const {processWatchUpdate} = require("./watch");
-const {processAnchorStart, processAnchorResult} = require("./anchor");
-const {saveAllEvent} = require("../database/test");
-const {processNoticeMessage} = require("./notice");
+} = require("../process/redpacket");
+const {processNewGuardInfo} = require("../process/guard");
+const {processWatchUpdate} = require("../process/watch");
+const {processAnchorStart, processAnchorResult} = require("../process/anchor");
+const {processNoticeMessage} = require("../process/notice");
 const {
     processBattleStart,
     processBattleProgressInfo,
     processBattleResult,
     processBattleAssistInfo
-} = require("./battle");
+} = require("../process/battle");
+const {connectToDatabase} = require("../database/init");
+let isConnected = false
+connectToDatabase(config.get('database.mongoDB')).then((res)=>{
+    if (res.status === true){
+        isConnected = true
+    }else{
+        logger.warn(res.message)
+        process.exit(100043)
+    }
+
+})
 
 /**
  * 处理客户端发过来的所有直播消息,进行去重后转交下级处理程序
@@ -34,13 +42,10 @@ const {
  */
 const processLiveMessage = async (message, client) => {
     try {
-        /**
         const cacheRes = await cacheLiveMessage(JSON.stringify(message.info), 10)
         if (cacheRes) {
             return
         }
-         **/
-        //await saveAllEvent(JSON.stringify(message.info))
         //await fs.writeFileSync(path.resolve(`./template/${message.info.cmd}.json`),JSON.stringify(message.info))
         switch (message.info.cmd) {
             case 'DANMU_MSG': //弹幕消息
@@ -120,9 +125,11 @@ const processLiveMessage = async (message, client) => {
                 break
 
             default:
+                /**
                 if (fs.existsSync(path.resolve(`./template/${message.info.cmd}.json`)) === false) {
                     await fs.writeFileSync(path.resolve(`./template/${message.info.cmd}.json`), JSON.stringify(message.info))
                 }
+                 **/
                 break
         }
     } catch (e) {
@@ -131,26 +138,12 @@ const processLiveMessage = async (message, client) => {
 }
 
 
-/**
- * 处理客户端发来的直播在线消息
- * @param message {{type:string,room:Number,online:Number}} 在线消息
- * @param client {string} 客户端唯一编号
- * @returns {Promise<void>}
- */
-const processOnlineMessage = async (message, client) => {
-    try {
-        const cacheResult = await cacheOnlineMessage(JSON.stringify(message), 10)
-        if (cacheResult) {
-            return
-        }
-        logger.debug(`Room ${message.room} now has ${message.online} viewers online.`)
-    } catch (e) {
-        logger.warn(`An error occurred during online message processing, message:${e.message}`)
+
+module.exports = async (workerInfos)=>{
+    while (isConnected === false){
+        await new Promise(resolve => {
+            setTimeout(resolve,100)
+        })
     }
-}
-
-
-module.exports = {
-    processOnlineMessage,
-    processLiveMessage
+    await processLiveMessage(workerInfos.info,workerInfos.client)
 }

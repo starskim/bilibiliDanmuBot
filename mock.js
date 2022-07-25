@@ -53,6 +53,9 @@ const sendMockData = async ()=>{
         for (let j = 0; j < list.length; j++) {
             await socket.emit('ROOM_MSG',{room:195909,info:JSON.parse(list[j].info)})
         }
+        await new Promise(resolve => {
+            setTimeout(resolve,1000)
+        })
         console.log(`Started ${i * 10000} time send...`)
     }
 }
