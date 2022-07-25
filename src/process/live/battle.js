@@ -1,10 +1,10 @@
-const logger = require('../local/logger')
+const logger = require('../../local/logger')
 const {
     saveNewBattleInfo,
     updateBattleProgressInfo,
     updateBattleResult,
     updateBattleAssistUsers
-} = require("../database/battle");
+} = require("../../database/live/battle");
 
 
 /**

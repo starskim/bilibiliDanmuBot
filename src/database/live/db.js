@@ -195,7 +195,10 @@ const noticeSchema = new Schema({
     time: {type: Date, default: Date.now}
 })
 
-
+//PK_BATTLE_SETTLE_USER
+//PK_BATTLE_START_NEW
+//PK_BATTLE_PROCESS
+//PK_BATTLE_SETTLE_V2
 const battleSchema = new Schema({
     room: Number,
     hash: Number,
@@ -274,6 +277,31 @@ const battleSchema = new Schema({
     }
 }, {minimize: false})
 
+
+const superChatSchema = new Schema({
+    room:Number,    //房间号
+    hash:Number,   //sc唯一ID
+    info:{
+        message:String,  //原始消息
+        messageJpn:String, //JPN消息-B站特供
+        deleted:Boolean, //是否被房管/管理员删除
+        price:Number, //价格-CNY
+        time:Number, //持续时间-单位秒
+        _id:false
+    },
+    sender:{
+        uid:Number,   //发送者信息
+        name:String,
+        face:String,
+        level:Number,
+        _id:false
+    },
+    sendTime:{type:Date,default:Date.now}//发送时间
+},{minimize:false})
+
+
+
+
 const testSchema = new Schema({
     info: String
 })
@@ -290,6 +318,8 @@ const anchor = mongoose.model('anchor', anchorSchema)
 const test = mongoose.model('test', testSchema)
 const notice = mongoose.model('notice', noticeSchema)
 const battle = mongoose.model('battle', battleSchema)
+const superChat = mongoose.model('superChat',superChatSchema)
+
 
 module.exports = {
     danmu,
@@ -303,5 +333,6 @@ module.exports = {
     anchor,
     test,
     notice,
-    battle
+    battle,
+    superChat
 }

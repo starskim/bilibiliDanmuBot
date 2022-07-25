@@ -1,5 +1,5 @@
-const logger = require('../local/logger')
-const {saveRoomMuteInfo} = require("../database/silent");
+const logger = require('../../local/logger')
+const {saveRoomMuteInfo} = require("../../database/live/silent");
 
 
 /**

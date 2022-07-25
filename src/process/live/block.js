@@ -1,5 +1,5 @@
-const logger = require('../local/logger')
-const {saveBlockMessage} = require("../database/block");
+const logger = require('../../local/logger')
+const {saveBlockMessage} = require("../../database/live/block");
 
 
 /**

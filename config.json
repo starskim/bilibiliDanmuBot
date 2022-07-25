@@ -1,14 +1,15 @@
 {
   "develop": {
     "debug": false,
-    "danmu": false,
+    "danmu": true,
     "gift": false,
     "block": true,
     "mute": false,
     "join": false,
     "redPacket": true,
     "anchor": true,
-    "pk": true
+    "pk": true,
+    "sc": false
   },
   "database": {
     "redis": "redis://127.0.0.1:6379/",

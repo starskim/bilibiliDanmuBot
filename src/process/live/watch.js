@@ -1,5 +1,5 @@
-const {saveWatchInfo} = require("../database/watch");
-const logger = require('../local/logger')
+const {saveWatchInfo} = require("../../database/live/watch");
+const logger = require('../../local/logger')
 
 /**
  * 处理房间观看人数更新消息

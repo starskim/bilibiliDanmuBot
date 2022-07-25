@@ -1,5 +1,5 @@
-const logger = require('../local/logger')
-const {saveNewGuardInfo} = require("../database/guard");
+const logger = require('../../local/logger')
+const {saveNewGuardInfo} = require("../../database/live/guard");
 
 
 /**

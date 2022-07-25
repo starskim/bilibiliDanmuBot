@@ -68,7 +68,13 @@ module.exports = {
         if (develop.pk === false) {
             return
         }
-        console.log(color.red('[PK BATTLE]' + '[' + getFormatTime() + ']: '), ...args);
+        console.log(color.magenta('[PK BATTLE]' + '[' + getFormatTime() + ']: '), ...args);
+    },
+    sc(...args) {
+        if (develop.sc === false) {
+            return
+        }
+        console.log(color.red.bold('[SUPER CHAT]' + '[' + getFormatTime() + ']: '), ...args);
     },
     info(...args) {
         console.log(color.magenta('[INFO]') + '[' + getFormatTime() + ']:', ...args);

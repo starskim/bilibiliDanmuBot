@@ -1,28 +1,31 @@
 const logger = require('../local/logger')
 const config = require('../local/config')
-const {processDanmuMessage} = require("../process/danmu");
-const {processGiftMessage} = require("../process/gift");
+const fs = require('fs')
+const path =require('path')
+const {processDanmuMessage} = require("../process/live/danmu");
+const {processGiftMessage} = require("../process/live/gift");
 const {cacheLiveMessage} = require("../cache/live");
-const {processBlockMessage} = require("../process/block");
-const {processRoomSilentOperation} = require("../process/silent");
-const {processInteractMessage} = require("../process/interact");
+const {processBlockMessage} = require("../process/live/block");
+const {processRoomSilentOperation} = require("../process/live/silent");
+const {processInteractMessage} = require("../process/live/interact");
 const {
     processRedPacketStart,
     processRedPacketEnd,
     processRedPacketOrAnchorJoin,
     processRedPacketOrAnchorAggregation
-} = require("../process/redpacket");
-const {processNewGuardInfo} = require("../process/guard");
-const {processWatchUpdate} = require("../process/watch");
-const {processAnchorStart, processAnchorResult} = require("../process/anchor");
-const {processNoticeMessage} = require("../process/notice");
+} = require("../process/live/redpacket");
+const {processNewGuardInfo} = require("../process/live/guard");
+const {processWatchUpdate} = require("../process/live/watch");
+const {processAnchorStart, processAnchorResult} = require("../process/live/anchor");
+const {processNoticeMessage} = require("../process/live/notice");
 const {
     processBattleStart,
     processBattleProgressInfo,
     processBattleResult,
     processBattleAssistInfo
-} = require("../process/battle");
-const {connectToDatabase} = require("../database/init");
+} = require("../process/live/battle");
+const {connectToDatabase} = require("../database/live/init");
+const {processSuperChatDeletion, processSuperChatJpn, processSuperChatSends} = require("../process/live/superChat");
 let isConnected = false
 connectToDatabase(config.get('database.mongoDB')).then((res)=>{
     if (res.status === true){
@@ -124,12 +127,25 @@ const processLiveMessage = async (message, client) => {
                 await processBattleAssistInfo(message.info, message.room)
                 break
 
+            case 'SUPER_CHAT_MESSAGE_DELETE'://SC被管理员删除等
+                await processSuperChatDeletion(message.info,message.room)
+                break
+
+            case 'SUPER_CHAT_MESSAGE_JPN'://SC小日子过得不错的日本语
+                await processSuperChatJpn(message.info,message.room)
+                break
+
+            case 'SUPER_CHAT_MESSAGE': //SC发送
+                await processSuperChatSends(message.info,message.room)
+                break
+
+
             default:
-                /**
+
                 if (fs.existsSync(path.resolve(`./template/${message.info.cmd}.json`)) === false) {
                     await fs.writeFileSync(path.resolve(`./template/${message.info.cmd}.json`), JSON.stringify(message.info))
                 }
-                 **/
+
                 break
         }
     } catch (e) {

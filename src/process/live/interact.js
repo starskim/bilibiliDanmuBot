@@ -1,5 +1,5 @@
-const logger = require('../local/logger')
-const {saveUserJoinInfo} = require("../database/join");
+const logger = require('../../local/logger')
+const {saveUserJoinInfo} = require("../../database/live/join");
 
 
 /**

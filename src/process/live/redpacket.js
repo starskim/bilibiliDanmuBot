@@ -1,10 +1,10 @@
-const logger = require('../local/logger')
+const logger = require('../../local/logger')
 const {
     saveNewRedPacketInfo, pushUserJoinRedPacketEvent, pushWinnerUsersToRedPacketEvent,
     updateRedPacketUserAmount
-} = require("../database/redpacket");
-const {getAwardMessage, cacheAwardMessage} = require("../cache/award");
-const {pushUserJoinAnchorEvent, updateAnchorUserAmount} = require("../database/anchor");
+} = require("../../database/live/redpacket");
+const {getAwardMessage, cacheAwardMessage} = require("../../cache/award");
+const {pushUserJoinAnchorEvent, updateAnchorUserAmount} = require("../../database/live/anchor");
 
 
 /**

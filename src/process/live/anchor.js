@@ -1,6 +1,6 @@
-const logger = require('../local/logger')
-const {saveAnchorStart, saveAnchorResult} = require("../database/anchor");
-const {cacheAwardMessage} = require("../cache/award");
+const logger = require('../../local/logger')
+const {saveAnchorStart, saveAnchorResult} = require("../../database/live/anchor");
+const {cacheAwardMessage} = require("../../cache/award");
 
 
 /**

@@ -1,4 +1,4 @@
-const db = require('./src/database/db')
+const db = require('./src/database/live/db')
 const mongoose = require('mongoose')
 const logger = require('./src/local/logger')
 const { Manager } = require('socket.io-client')
@@ -46,17 +46,13 @@ socket.io.on('ping',()=>{
 const sendMockData = async ()=>{
     const res = await connectToDatabase('mongodb://localhost:27017/biliDashBoard')
     console.log(res)
-    const count = await db.test.count().exec()
-    const times = Math.floor(count / 10000)
+    const count = await db.test.count({info:{$regex:'SUPER_CHAT_MESSAGE'}}).exec()
+    const times = Math.floor(count / 1000 )
     for (let i = 0; i < times; i++) {
-        const list = await db.test.find().limit(10000).skip(i * 10000).sort({_id:-1}).exec()
+        const list = await db.test.find({info:{$regex:'SUPER_CHAT_MESSAGE'}}).limit(1000).skip(i * 1000).sort({_id:-1}).exec()
         for (let j = 0; j < list.length; j++) {
             await socket.emit('ROOM_MSG',{room:195909,info:JSON.parse(list[j].info)})
         }
-        await new Promise(resolve => {
-            setTimeout(resolve,1000)
-        })
-        console.log(`Started ${i * 10000} time send...`)
     }
 }
 

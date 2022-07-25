@@ -1,5 +1,5 @@
-const {saveDanmuInfo} = require("../database/danmu");
-const logger = require('../local/logger')
+const {saveDanmuInfo} = require("../../database/live/danmu");
+const logger = require('../../local/logger')
 
 
 /**

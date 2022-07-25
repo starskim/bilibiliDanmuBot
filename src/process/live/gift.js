@@ -1,5 +1,5 @@
-const logger = require('../local/logger')
-const {saveGiftInfo} = require("../database/gift");
+const logger = require('../../local/logger')
+const {saveGiftInfo} = require("../../database/live/gift");
 
 
 /**
