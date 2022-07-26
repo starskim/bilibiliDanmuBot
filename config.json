@@ -1,14 +1,14 @@
 {
   "develop": {
-    "debug": false,
+    "debug": true,
     "danmu": true,
     "gift": false,
     "block": true,
     "mute": false,
     "join": false,
-    "redPacket": true,
-    "anchor": true,
-    "pk": true,
+    "redPacket": false,
+    "anchor": false,
+    "pk": false,
     "sc": false
   },
   "database": {

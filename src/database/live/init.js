@@ -6,7 +6,7 @@ const connectToDatabase = async (url) => {
         // noinspection JSUnresolvedFunction
         await mongoose.connect(url, {
             bufferCommands: false,
-            useUnifiedTopology:true
+            useUnifiedTopology: true
         })
         return {status: true, message: `连接到数据库成功`}
     } catch (e) {

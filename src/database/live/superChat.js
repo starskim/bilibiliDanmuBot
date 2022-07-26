@@ -21,29 +21,29 @@ const db = require('./db')
  * }}
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const saveNewSuperChatInfos = async (info)=>{
+const saveNewSuperChatInfos = async (info) => {
     try {
-        await db.superChat.updateOne({hash:info.hash},{
-            $set:{
-                room:info.room,
-                info:{
-                    message:info.info.message,
-                    deleted:info.info.deleted,
-                    price:info.info.price,
-                    time:info.info.time
+        await db.superChat.updateOne({hash: info.hash}, {
+            $set: {
+                room: info.room,
+                info: {
+                    message: info.info.message,
+                    deleted: info.info.deleted,
+                    price: info.info.price,
+                    time: info.info.time
                 },
-                sender:{
-                    uid:info.sender.uid,
-                    name:info.sender.name,
-                    face:info.sender.face,
-                    level:info.sender.level
+                sender: {
+                    uid: info.sender.uid,
+                    name: info.sender.name,
+                    face: info.sender.face,
+                    level: info.sender.level
                 }
             }
-        },{upsert:true}).exec()
+        }, {upsert: true}).exec()
         //评价:丑的一笔
-        return {status:true,message:'OK'}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: 'OK'}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 
@@ -56,16 +56,16 @@ const saveNewSuperChatInfos = async (info)=>{
  * }}
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const updateSuperChatJpnMessage = async (info)=>{
+const updateSuperChatJpnMessage = async (info) => {
     try {
-        await db.superChat.updateOne({hash:info.hash},{
-            $set:{
-                "info.messageJpn":info.message
+        await db.superChat.updateOne({hash: info.hash}, {
+            $set: {
+                "info.messageJpn": info.message
             }
-        },{upsert:true}).exec()
-        return {status:true,message:'OK'}
-    }catch (e) {
-        return {status:false,message:e.message}
+        }, {upsert: true}).exec()
+        return {status: true, message: 'OK'}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 
@@ -76,7 +76,7 @@ const updateSuperChatJpnMessage = async (info)=>{
  * }}
  * @returns {Promise<{message: string, status: boolean}>}
  */
-const markSuperChatAsDeleted = async (info)=>{
+const markSuperChatAsDeleted = async (info) => {
     try {
         await db.superChat.updateOne({hash: info.hash}, {
             set: {
@@ -84,12 +84,11 @@ const markSuperChatAsDeleted = async (info)=>{
             }
         }).exec()
 
-        return {status:true,message:'OK'}
-    }catch (e) {
-        return {status:false,message:e.message}
+        return {status: true, message: 'OK'}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
-
 
 
 module.exports = {

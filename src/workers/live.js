@@ -1,7 +1,7 @@
 const logger = require('../local/logger')
 const config = require('../local/config')
 const fs = require('fs')
-const path =require('path')
+const path = require('path')
 const {processDanmuMessage} = require("../process/live/danmu");
 const {processGiftMessage} = require("../process/live/gift");
 const {cacheLiveMessage} = require("../cache/live");
@@ -27,14 +27,13 @@ const {
 const {connectToDatabase} = require("../database/live/init");
 const {processSuperChatDeletion, processSuperChatJpn, processSuperChatSends} = require("../process/live/superChat");
 let isConnected = false
-connectToDatabase(config.get('database.mongoDB')).then((res)=>{
-    if (res.status === true){
+connectToDatabase(config.get('database.mongoDB')).then((res) => {
+    if (res.status === true) {
         isConnected = true
-    }else{
+    } else {
         logger.warn(res.message)
         process.exit(100043)
     }
-
 })
 
 /**
@@ -77,7 +76,7 @@ const processLiveMessage = async (message, client) => {
                 break
 
             case 'PREPARING': //直播结束
-                console.log(message.info)
+                //TODO: 查询数据库并决定是否关闭该直播间的监听
                 break
             case 'POPULARITY_RED_POCKET_WINNER_LIST': //红包赢家列表报告
                 await processRedPacketEnd(message.info)
@@ -128,24 +127,22 @@ const processLiveMessage = async (message, client) => {
                 break
 
             case 'SUPER_CHAT_MESSAGE_DELETE'://SC被管理员删除等
-                await processSuperChatDeletion(message.info,message.room)
+                await processSuperChatDeletion(message.info)
                 break
 
             case 'SUPER_CHAT_MESSAGE_JPN'://SC小日子过得不错的日本语
-                await processSuperChatJpn(message.info,message.room)
+                await processSuperChatJpn(message.info)
                 break
 
             case 'SUPER_CHAT_MESSAGE': //SC发送
-                await processSuperChatSends(message.info,message.room)
+                await processSuperChatSends(message.info, message.room)
                 break
 
 
             default:
-
                 if (fs.existsSync(path.resolve(`./template/${message.info.cmd}.json`)) === false) {
                     await fs.writeFileSync(path.resolve(`./template/${message.info.cmd}.json`), JSON.stringify(message.info))
                 }
-
                 break
         }
     } catch (e) {
@@ -154,12 +151,11 @@ const processLiveMessage = async (message, client) => {
 }
 
 
-
-module.exports = async (workerInfos)=>{
-    while (isConnected === false){
+module.exports = async (workerInfos) => {
+    while (isConnected === false) {
         await new Promise(resolve => {
-            setTimeout(resolve,100)
+            setTimeout(resolve, 100)
         })
     }
-    await processLiveMessage(workerInfos.info,workerInfos.client)
+    await processLiveMessage(workerInfos.info, workerInfos.client)
 }

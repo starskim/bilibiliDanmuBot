@@ -46,10 +46,10 @@ socket.io.on('ping',()=>{
 const sendMockData = async ()=>{
     const res = await connectToDatabase('mongodb://localhost:27017/biliDashBoard')
     console.log(res)
-    const count = await db.test.count({info:{$regex:'SUPER_CHAT_MESSAGE'}}).exec()
-    const times = Math.floor(count / 1000 )
+    const count = await db.test.count().exec()
+    const times = Math.floor(count / 100 )
     for (let i = 0; i < times; i++) {
-        const list = await db.test.find({info:{$regex:'SUPER_CHAT_MESSAGE'}}).limit(1000).skip(i * 1000).sort({_id:-1}).exec()
+        const list = await db.test.find().limit(100).skip(i * 100).sort({_id:-1}).exec()
         for (let j = 0; j < list.length; j++) {
             await socket.emit('ROOM_MSG',{room:195909,info:JSON.parse(list[j].info)})
         }

@@ -1,5 +1,9 @@
 const logger = require('../../local/logger')
-const {saveNewSuperChatInfos, updateSuperChatJpnMessage, markSuperChatAsDeleted} = require("../../database/live/superChat");
+const {
+    saveNewSuperChatInfos,
+    updateSuperChatJpnMessage,
+    markSuperChatAsDeleted
+} = require("../../database/live/superChat");
 
 
 /**
@@ -71,30 +75,30 @@ const {saveNewSuperChatInfos, updateSuperChatJpnMessage, markSuperChatAsDeleted}
  * @param room {Number}
  * @returns {Promise<void>}
  */
-const processSuperChatSends = async (infos,room)=>{
+const processSuperChatSends = async (infos, room) => {
     try {
         const scInfos = {
-            room:room,
-            hash:infos.data.id,
-            info:{
-                message:infos.data.message,
-                deleted:false,
-                price:infos.data.price,
-                time:infos.data.time
+            room: room,
+            hash: infos.data.id,
+            info: {
+                message: infos.data.message,
+                deleted: false,
+                price: infos.data.price,
+                time: infos.data.time
             },
-            sender:{
-                uid:infos.data.uid,
-                name:infos.data.user_info.uname,
-                face:infos.data.user_info.face,
-                level:infos.data.user_info.user_level
+            sender: {
+                uid: infos.data.uid,
+                name: infos.data.user_info.uname,
+                face: infos.data.user_info.face,
+                level: infos.data.user_info.user_level
             }
         }
         logger.sc(`User ${infos.data.user_info.uname} send message:${infos.data.message} at price $${infos.data.price}`)
         const res = await saveNewSuperChatInfos(scInfos)
-        if (res.status === false){
+        if (res.status === false) {
             logger.warn(`An error occurred when saving sc info to database, message:${res.message}`)
         }
-    }catch (e) {
+    } catch (e) {
         logger.warn(`An error occurred when saving sc info to database, message:${e.message}`)
     }
 }
@@ -167,17 +171,17 @@ const processSuperChatSends = async (infos,room)=>{
  * }}
  * @returns {Promise<void>}
  */
-const processSuperChatJpn = async (infos)=>{
+const processSuperChatJpn = async (infos) => {
     try {
         const JpnInfo = {
-            hash:Number.parseInt(infos.data.id),
-            message:infos.data.message_jpn
+            hash: Number.parseInt(infos.data.id),
+            message: infos.data.message_jpn
         }
         const res = await updateSuperChatJpnMessage(JpnInfo)
-        if (res.status === false){
+        if (res.status === false) {
             logger.warn(`An error occurred when update sc info to database, message:${res.message}`)
         }
-    }catch (e) {
+    } catch (e) {
         logger.warn(`An error occurred when update sc info, message:${e.message}`)
     }
 }
@@ -196,15 +200,15 @@ const processSuperChatJpn = async (infos)=>{
  * }}
  * @returns {Promise<void>}
  */
-const processSuperChatDeletion = async (infos)=>{
+const processSuperChatDeletion = async (infos) => {
     try {
         for (let i = 0; i < infos.data.ids.length; i++) {
-            const res = await markSuperChatAsDeleted({hash:infos.data.ids[i]})
-            if (res.status === false){
+            const res = await markSuperChatAsDeleted({hash: infos.data.ids[i]})
+            if (res.status === false) {
                 logger.warn(`An error occurred when marking sc ${infos.data.ids[i]} as delete, message:${res.message}`)
             }
         }
-    }catch (e) {
+    } catch (e) {
         logger.warn(`An error occurred when processing sc deletion, message:${e.message}`)
     }
 }
