@@ -325,7 +325,7 @@ const processBattleResult = async (infos, room) => {
                         ulLevel: 0
                     }
                 },
-                selfInfo: selfInfo
+                self: selfInfo
             }
         } else {
             resultInfo = {
@@ -348,7 +348,7 @@ const processBattleResult = async (infos, room) => {
                         ulLevel: infos.data.winner.best_user.exp.level
                     }
                 },
-                selfInfo: selfInfo
+                self: selfInfo
             }
         }
         const res = await updateBattleResult(resultInfo)
