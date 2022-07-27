@@ -19,7 +19,8 @@ connectToDatabase(config.get('database.mongoDB')).then((res) => {
  * @param info {{
  *     type:String,
  *     client:String,
- *     data:any
+ *     data:any,
+ *     port:MessagePort
  * }}
  * @returns {Promise<{event: string ,args:any?}>}
  */
@@ -28,7 +29,7 @@ const processClientMessage = async (info) => {
 
     switch (info.type) {
         case 'CLIENT_REGISTER': //客户端提交注册信息
-            await processNewClientRegister(info.data)
+            await processNewClientRegister(info.data, info.port)
             break
 
         case'CLIENT_DISCONNECT': //客户端断开连接(无论原因)
@@ -37,7 +38,7 @@ const processClientMessage = async (info) => {
             break
 
         case 'MISSION_ACCEPT': //客户端接受任务
-            await processClientAcceptMission(info.data,info.client)
+            await processClientAcceptMission(info.data, info.client)
             break
     }
 }

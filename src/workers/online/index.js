@@ -13,7 +13,6 @@ connectToDatabase(config.get('database.mongoDB')).then((res) => {
 })
 
 
-
 /**
  * 处理客户端发来的直播在线消息
  * @param message {{type:string,room:Number,online:Number}} 在线消息

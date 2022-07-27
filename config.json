@@ -1,7 +1,7 @@
 {
   "develop": {
     "debug": false,
-    "danmu": true,
+    "danmu": false,
     "gift": false,
     "block": false,
     "mute": false,

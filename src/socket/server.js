@@ -1,10 +1,9 @@
 const {Server} = require('socket.io')
-const { cronJobTrigger } = require('../service/trigger')
+const {cronJobTrigger} = require('../service/trigger')
 const config = require('../local/config')
 const logger = require('../local/logger')
 const path = require('path');
 const Piscina = require('piscina');
-
 
 const io = new Server(config.get('basic.socketPort'), {
     pingTimeout: 5000, //超时时间
@@ -51,11 +50,29 @@ io.on('connection', async socket => {
     })
 
     socket.on('CLIENT_REGISTER', async info => {
-        await clientMessageWorker.run({type: 'CLIENT_REGISTER', client: socket.id, data: info})
+        const wc = new MessageChannel()
+        await clientMessageWorker.run({
+            type: 'CLIENT_REGISTER',
+            client: socket.id,
+            data: info,
+            port: wc.port1
+        }, {transferList: [wc.port1]})
+        wc.port2.onmessage = (res) => {
+            processClientProcessEvent(res.data)
+        }
     })
 
-    socket.on('MISSION_ACCEPT',async (missionInfo)=>{
-        await clientMessageWorker.run({type:'MISSION_ACCEPT',client:socket.id,data:missionInfo})
+    socket.on('MISSION_ACCEPT', async (missionInfo) => {
+        const wc = new MessageChannel()
+        await clientMessageWorker.run({
+            type: 'MISSION_ACCEPT',
+            client: socket.id,
+            data: missionInfo,
+            port: wc.port1
+        }, {transferList: [wc.port1]})
+        wc.port2.onmessage = (res) => {
+            processClientProcessEvent(res.data)
+        }
     })
 
     socket.on('disconnect', async reason => {
@@ -64,11 +81,27 @@ io.on('connection', async socket => {
     })
 })
 
-//定时任务-任务发布通知
-cronJobTrigger.on('MISSION_DEPLOY',async ()=>{
+/**
+ * 处理客户端对应worker的处理过程中,emit的数据
+ * @param ev {any}
+ * @returns {Promise<void>}
+ */
+const processClientProcessEvent = async (ev) => {
+    switch (ev.type) {
+        case 'REGISTER_SUCCESS':
+            io.in(ev.client).emit(ev.type, ev.data)
+            break
+    }
+}
+
+
+//定时任务-发布所有任务
+cronJobTrigger.on('MISSION_DEPLOY', async () => {
     console.log(`MISSION_DEPLOY`)
 })
 
-cronJobTrigger.on('GET_ROOM_FROM_INDEX',async ()=>{
+
+//定时任务-创建任务-从B站直播首页抓取所有直播间
+cronJobTrigger.on('GET_ROOM_FROM_INDEX', async () => {
     console.log('GET_ROOM_FROM_INDEX')
 })

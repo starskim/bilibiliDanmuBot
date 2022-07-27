@@ -11,9 +11,9 @@ const redis = new Redis(`${config.get('database.redis')}3`)
  * @param ttl {number} 消息存活时间
  * @returns {Promise<{message: string, status: boolean}>} true则存在,false则不存在
  */
-const cacheNewMission = async (hash,args, ttl) => {
-    const res = await redis.set(hash, JSON.stringify(args), 'EX' ,ttl)
-    if (res !== 'OK'){
+const cacheNewMission = async (hash, args, ttl) => {
+    const res = await redis.set(hash, JSON.stringify(args), 'EX', ttl)
+    if (res !== 'OK') {
         logger.warn(`An error occurred when caching new mission,info:${JSON.stringify(args)}`)
     }
 }
@@ -22,7 +22,7 @@ const cacheNewMission = async (hash,args, ttl) => {
  * 获取缓存队列中的所有任务列表
  * @returns {Promise<{total: number, missions: *[string]}>}
  */
-const getAllCachedMissions = async ()=>{
+const getAllCachedMissions = async () => {
     let cursor = 0
     const missions = []
     do {
@@ -31,8 +31,8 @@ const getAllCachedMissions = async ()=>{
         for (let i = 0; i < res[1].length; i++) {
             missions.push(res[1][i])
         }
-    }while (cursor !== 0)
-    return {total:missions.length,missions:missions}
+    } while (cursor !== 0)
+    return {total: missions.length, missions: missions}
 }
 
 
@@ -41,7 +41,7 @@ const getAllCachedMissions = async ()=>{
  * @param missionId {string}
  * @returns {Promise<string|null>}
  */
-const getMissionDetail = async (missionId)=>{
+const getMissionDetail = async (missionId) => {
     return redis.get(missionId);
 }
 
@@ -50,7 +50,7 @@ const getMissionDetail = async (missionId)=>{
  * @param missionId {string}
  * @returns {Promise<void>}
  */
-const deleteMission = async (missionId)=>{
+const deleteMission = async (missionId) => {
     await redis.del(missionId)
 }
 

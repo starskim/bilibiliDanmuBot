@@ -11,24 +11,32 @@ const {registerNewClient, removeClientFromDB} = require("../database/manager");
  *     version:String,
  *     ip:String
  * }}
+ * @param port {MessagePort}
  * @returns {Promise<void>}
  */
-const processNewClientRegister = async (info) => {
+const processNewClientRegister = async (info, port) => {
     try {
         const clientInfo = {
-            hash:info.hash,
-            name:info.name,
-            version:info.version,
-            ip:info.ip,
-            amount:{
-                room:info.rooms,
-                mission:0
+            hash: info.hash,
+            name: info.name,
+            version: info.version,
+            ip: info.ip,
+            amount: {
+                room: info.rooms,
+                mission: 0
             }
         }
         const res = await registerNewClient(clientInfo)
         if (res.status === false) {
             logger.warn(`Register client ${info.hash} occurred an error, message:${res.message}`)
         } else {
+            //await reportMessage('REGISTER_SUCCESS',{info:info.hash})
+            port.postMessage({
+                send: true,
+                client: info.hash,
+                type: "REGISTER_SUCCESS",
+                data: {type: 'REGISTER_SUCCESS', info: info.hash}
+            })
             logger.debug(`Client ${info.name} register success.`)
         }
     } catch (e) {

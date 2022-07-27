@@ -39,9 +39,9 @@ const updateClientAmounts = async (info) => {
     try {
         await db.client.updateOne({hash: info.id}, {
             $set: {
-                amount:{
-                    room:info.amount.room,
-                    mission:info.amount.mission
+                amount: {
+                    room: info.amount.room,
+                    mission: info.amount.mission
                 }
             }
         }).exec()
@@ -72,16 +72,16 @@ const removeClientFromDB = async (id) => {
  * 获取当前执行任务数最少的客户端
  * @returns {Promise<{client:String?, message: string, status: boolean}>}
  */
-const getClientForMission = async ()=>{
+const getClientForMission = async () => {
     try {
-        const res = await db.client.findOne().sort({"amount.mission":-1}).exec()
-        if (res === null){
-            return {status:false,message:`No any client can be found`}
-        }else{
-            return {status:true,message:'OK',client:res["hash"]}
+        const res = await db.client.findOne().sort({"amount.mission": -1}).exec()
+        if (res === null) {
+            return {status: false, message: `No any client can be found`}
+        } else {
+            return {status: true, message: 'OK', client: res["hash"]}
         }
-    }catch (e) {
-        return {status:false,message:e.message}
+    } catch (e) {
+        return {status: false, message: e.message}
     }
 }
 
