@@ -37,7 +37,7 @@ const processNewClientRegister = async (info, port) => {
                 type: "REGISTER_SUCCESS",
                 data: {type: 'REGISTER_SUCCESS', info: info.hash}
             })
-            logger.debug(`Client ${info.name} register success.`)
+            logger.info(`Client ${info.name} register success.`)
         }
     } catch (e) {
         logger.warn(`Register client ${info.name} occurred an error, message:${e.message}`)

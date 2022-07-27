@@ -38,7 +38,6 @@ const clientMessageWorker = new Piscina({
 
 
 io.on('connection', async socket => {
-    logger.info(`Remote client ${socket.id} has connected.`)
     socket.emit('REQUIRE_REGISTER')
 
     socket.on('ROOM_MSG', async msg => {
@@ -51,28 +50,28 @@ io.on('connection', async socket => {
 
     socket.on('CLIENT_REGISTER', async info => {
         const wc = new MessageChannel()
+        wc.port2.onmessage = (res) => {
+            processClientProcessEvent(res.data)
+        }
         await clientMessageWorker.run({
             type: 'CLIENT_REGISTER',
             client: socket.id,
             data: info,
             port: wc.port1
         }, {transferList: [wc.port1]})
-        wc.port2.onmessage = (res) => {
-            processClientProcessEvent(res.data)
-        }
     })
 
     socket.on('MISSION_ACCEPT', async (missionInfo) => {
         const wc = new MessageChannel()
+        wc.port2.onmessage = (res) => {
+            processClientProcessEvent(res.data)
+        }
         await clientMessageWorker.run({
             type: 'MISSION_ACCEPT',
             client: socket.id,
             data: missionInfo,
             port: wc.port1
         }, {transferList: [wc.port1]})
-        wc.port2.onmessage = (res) => {
-            processClientProcessEvent(res.data)
-        }
     })
 
     socket.on('disconnect', async reason => {
@@ -80,6 +79,32 @@ io.on('connection', async socket => {
         await clientMessageWorker.run({type: 'CLIENT_DISCONNECT', client: socket.id})
     })
 })
+
+
+//定时任务-发布所有任务
+cronJobTrigger.on('MISSION_DEPLOY', async () => {
+    const wc = new MessageChannel()
+    wc.port2.onmessage = async (res) => {
+        await processClientProcessEvent(res.data)
+    }
+    await clientMessageWorker.run({
+        type: "MISSION_DEPLOY",
+        client: '',
+        data: {},
+        port: wc.port1,
+    }, {transferList: [wc.port1]})
+})
+
+
+//定时任务-创建任务-从B站直播首页抓取所有直播间
+cronJobTrigger.on('GET_ROOM_FROM_INDEX', async () => {
+    await clientMessageWorker.run({
+        type: "GET_ROOM_FROM_INDEX",
+        client: '',
+        data: {}
+    })
+})
+
 
 /**
  * 处理客户端对应worker的处理过程中,emit的数据
@@ -91,17 +116,9 @@ const processClientProcessEvent = async (ev) => {
         case 'REGISTER_SUCCESS':
             io.in(ev.client).emit(ev.type, ev.data)
             break
+
+        case 'GET_ROOM_FROM_INDEX':
+            io.in(ev.client).emit(ev.type, ev.data)
+            break
     }
 }
-
-
-//定时任务-发布所有任务
-cronJobTrigger.on('MISSION_DEPLOY', async () => {
-    console.log(`MISSION_DEPLOY`)
-})
-
-
-//定时任务-创建任务-从B站直播首页抓取所有直播间
-cronJobTrigger.on('GET_ROOM_FROM_INDEX', async () => {
-    console.log('GET_ROOM_FROM_INDEX')
-})

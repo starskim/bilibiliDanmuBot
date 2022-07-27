@@ -252,16 +252,15 @@ const battleSchema = new Schema({
             room: Number,
             votes: Number,
             bestUser: String,
-            time: {type: Date, default: Date.now},
             _id: false,
         },
         target: {
             room: Number,
             votes: Number,
             bestUser: String,
-            time: {type: Date, default: Date.now},
             _id: false,
         },
+        time: {type: Date, default: Date.now},
         _id: false
     }],
     assistList: [{

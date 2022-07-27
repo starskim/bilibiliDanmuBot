@@ -80,11 +80,9 @@ module.exports = {
         console.log(color.magenta('[INFO]') + '[' + getFormatTime() + ']:', ...args);
     },
     warn(...args) {
-        console.error(color.yellow('[WARN]' + '[' + getFormatTime() + ']:'), ...args);
-        console.trace()
+        console.error(color.yellow('[WARN]' + '[' + getFormatTime() + ']:'), ...args, new Error().stack);
     },
     error(...args) {
-        console.error(color.red('[ERROR]' + '[' + getFormatTime() + ']:'), ...args);
-        console.trace()
+        console.error(color.red('[ERROR]' + '[' + getFormatTime() + ']:'), ...args, new Error().stack);
     }
 }

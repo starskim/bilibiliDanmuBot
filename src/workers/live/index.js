@@ -28,14 +28,22 @@ const {connectToDatabase} = require("./database/init");
 const {processSuperChatDeletion, processSuperChatJpn, processSuperChatSends} = require("./process/superChat");
 
 let isConnected = false
-connectToDatabase(config.get('database.mongoDB')).then((res) => {
-    if (res.status === true) {
-        isConnected = true
-    } else {
-        logger.warn(`An error occurred connecting to database:${res.message}`)
-        process.exit(100043)
+
+const initDatabaseConnection = async () => {
+    let counter = 0
+    do {
+        const res = await connectToDatabase(config.get('database.mongoDB'))
+        if (res.status === true) {
+            isConnected = true
+        } else {
+            logger.warn(`An error occurred connecting to database:${res.message}`)
+            counter++
+        }
+    } while (isConnected === false || counter > 3)
+    if (isConnected === false) {
+        process.exit(10003)
     }
-})
+}
 
 /**
  * 处理客户端发过来的所有直播消息,进行去重后转交下级处理程序
@@ -154,10 +162,6 @@ const processLiveMessage = async (message, client) => {
 
 module.exports = async (workerInfos) => {
     //对数据库进行持久化连接,以避免多次重连数据库导致的性能开销
-    while (isConnected === false) {
-        await new Promise(resolve => {
-            setTimeout(resolve, 100)
-        })
-    }
+    await initDatabaseConnection()
     await processLiveMessage(workerInfos.info, workerInfos.client)
 }

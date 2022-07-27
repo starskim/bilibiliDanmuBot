@@ -20,7 +20,7 @@ const cacheNewMission = async (hash, args, ttl) => {
 
 /**
  * 获取缓存队列中的所有任务列表
- * @returns {Promise<{total: number, missions: *[string]}>}
+ * @returns {Promise<{total: number, list: *[string]}>}
  */
 const getAllCachedMissions = async () => {
     let cursor = 0
@@ -32,7 +32,7 @@ const getAllCachedMissions = async () => {
             missions.push(res[1][i])
         }
     } while (cursor !== 0)
-    return {total: missions.length, missions: missions}
+    return {total: missions.length, list: missions}
 }
 
 
