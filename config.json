@@ -1,9 +1,9 @@
 {
   "develop": {
-    "debug": true,
+    "debug": false,
     "danmu": true,
     "gift": false,
-    "block": true,
+    "block": false,
     "mute": false,
     "join": false,
     "redPacket": false,

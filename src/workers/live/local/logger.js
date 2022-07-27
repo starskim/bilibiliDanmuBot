@@ -84,7 +84,6 @@ module.exports = {
         console.trace()
     },
     error(...args) {
-        console.error(color.red('[ERROR]' + '[' + getFormatTime() + ']:'), ...args);
-        console.trace()
+        console.error(color.red('[ERROR]' + '[' + getFormatTime() + ']:'), ...args, new Error().stack);
     }
 }

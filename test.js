@@ -1,4 +1,4 @@
-const {connectToDatabase} = require("./src/database/live/init");
+const {connectToDatabase} = require("./src/workers/live/database/init");
 const config = require('./src/local/config')
 
 

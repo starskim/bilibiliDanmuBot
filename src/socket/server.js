@@ -1,4 +1,5 @@
 const {Server} = require('socket.io')
+const { cronJobTrigger } = require('../service/trigger')
 const config = require('../local/config')
 const logger = require('../local/logger')
 const path = require('path');
@@ -16,21 +17,21 @@ io.httpServer.on('error', err => {
 })
 
 const liveMessageWorker = new Piscina({
-    filename: path.resolve(__dirname, '../workers/live.js'),
+    filename: path.resolve(__dirname, '../workers/live/index.js'),
     idleTimeout: 10000,
     concurrentTasksPerWorker: 3,
     minThreads: 4
 });
 
 const onlineMessageWorker = new Piscina({
-    filename: path.resolve(__dirname, '../workers/online.js'),
+    filename: path.resolve(__dirname, '../workers/online/index.js'),
     idleTimeout: 10000,
     concurrentTasksPerWorker: 3,
     minThreads: 4
 });
 
 const clientMessageWorker = new Piscina({
-    filename: path.resolve(__dirname, '../workers/client.js'),
+    filename: path.resolve(__dirname, '../workers/client/index.js'),
     idleTimeout: 10000,
     concurrentTasksPerWorker: 3,
     minThreads: 4
@@ -50,14 +51,24 @@ io.on('connection', async socket => {
     })
 
     socket.on('CLIENT_REGISTER', async info => {
-        const res = await clientMessageWorker.run({type: 'CLIENT_REGISTER', client: socket.id, data: info})
-        if (res.event !== undefined) {
-            socket.emit(res.event, res.args)
-        }
+        await clientMessageWorker.run({type: 'CLIENT_REGISTER', client: socket.id, data: info})
+    })
+
+    socket.on('MISSION_ACCEPT',async (missionInfo)=>{
+        await clientMessageWorker.run({type:'MISSION_ACCEPT',client:socket.id,data:missionInfo})
     })
 
     socket.on('disconnect', async reason => {
         logger.info(`Remote client ${socket.id} has disconnected by ${reason}.`)
         await clientMessageWorker.run({type: 'CLIENT_DISCONNECT', client: socket.id})
     })
+})
+
+//定时任务-任务发布通知
+cronJobTrigger.on('MISSION_DEPLOY',async ()=>{
+    console.log(`MISSION_DEPLOY`)
+})
+
+cronJobTrigger.on('GET_ROOM_FROM_INDEX',async ()=>{
+    console.log('GET_ROOM_FROM_INDEX')
 })

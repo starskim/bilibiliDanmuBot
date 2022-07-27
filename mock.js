@@ -1,4 +1,4 @@
-const db = require('./src/database/live/db')
+const db = require('./src/workers/live/database/db')
 const mongoose = require('mongoose')
 const logger = require('./src/local/logger')
 const { Manager } = require('socket.io-client')
