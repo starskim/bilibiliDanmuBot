@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/older-fox/bilibiliDanmuBot#readme",
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^0.28.0",
     "colors": "^1.4.0",
     "conf": "^10.1.2",
     "ioredis": "^5.2.1",
